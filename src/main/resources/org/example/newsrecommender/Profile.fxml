@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.Profile">
+   <children>
+      <Button layoutX="450.0" layoutY="36.0" mnemonicParsing="false" text="Create Account" />
+      <TabPane layoutX="65.0" layoutY="139.0" prefHeight="231.0" prefWidth="491.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Viewed Articles">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="433.0">
+                     <children>
+                        <ListView layoutX="-1.0" layoutY="1.0" prefHeight="200.0" prefWidth="491.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Liked Articles">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView prefHeight="200.0" prefWidth="491.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Skipped">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="242.0">
+                     <children>
+                        <ListView prefHeight="200.0" prefWidth="491.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
