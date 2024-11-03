@@ -1,6 +1,7 @@
 package org.example.newsrecommender;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -16,42 +17,41 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
-    public PasswordField enterPasswordField;
-    public ImageView brandingImageView;
-    public TextField userNameTextField;
+    public PasswordField tf_password;
+    public TextField tf_username;
     @FXML
     private Button cancelButton;
     @FXML
-    private Button loginButton;
+    private Button button_login;
     @FXML
-    private Label loginMessageLabel;
+    private Button button_signup;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
-        File brandingFile = new File("@../../../../../../../../../../Abdullah/Screenshots/Screenshot_20230318-194025_WhatsApp.jpg");
-        Image brandingImage = new Image(brandingFile.toURI().toString());
-        brandingImageView.setImage(brandingImage);
+    public void initialize(URL location, ResourceBundle resource){
+        button_login.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.logInUser(event, tf_username.getText(), tf_password.getText());
+            }
+        });
+
+        button_signup.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                DBUtils.changeScene(event, "SignUp.fxml", "Signup", null);
+            }
+        });
+
     }
 
 
 
-    @FXML
-    public void loginButtonOnAction(ActionEvent event){
-
-        if (!(!userNameTextField.getText().isBlank() && enterPasswordField.getText().isBlank())){
-            validateLogin();
-        } else {
-            loginMessageLabel.setText("Please enter user name and password");
-        }
-    }
 
     public void cancelButtonOnAction(ActionEvent event){
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
 
-    public void validateLogin(){
 
-    }
 
 }
