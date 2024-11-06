@@ -5,25 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ece1d37b-2eca-476a-96e4-066c98152930" name="Changes" comment="First commit">
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/api.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/coding.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/deep-learning.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/demographic.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/segment.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/table.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/mysql-connector-j-9.1.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/DBUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/SignUp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Application.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/SignUp.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/SignUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/SignUp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,6 +24,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -75,15 +62,16 @@
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;A:/Year 2 Semester 1/CourseWorks/OOP/NewsRecommender/src/main/java/org/example/newsrecommender&quot;,
-    &quot;last_opened_file_path&quot;: &quot;A:/Year 2 Semester 1/CourseWorks/OOP/NewsRecommender/lib/mysql-connector-j-9.1.0.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;A:/Year 2 Semester 1/CourseWorks/OOP1&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.29770115&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.appearance&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -104,6 +92,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
+        <option value="jdk-18.0.2-corretto-18.0.2-4caba194b151-5720f15e" />
+        <option value="jdk-20.0.2-corretto-20.0.2.1-4caba194b151-5bc9ecd2" />
         <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
       </set>
     </attachedChunks>
@@ -128,6 +118,14 @@
       <workItem from="1730418021476" duration="14181000" />
       <workItem from="1730536553634" duration="7751000" />
       <workItem from="1730610548364" duration="604000" />
+      <workItem from="1730633159949" duration="344000" />
+      <workItem from="1730739637251" duration="133000" />
+      <workItem from="1730754440190" duration="252000" />
+      <workItem from="1730805269331" duration="675000" />
+      <workItem from="1730886410969" duration="605000" />
+      <workItem from="1730895004071" duration="1215000" />
+      <workItem from="1730908700425" duration="391000" />
+      <workItem from="1730910771085" duration="185000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
@@ -165,5 +163,9 @@
         </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
