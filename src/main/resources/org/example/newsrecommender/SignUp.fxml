@@ -41,7 +41,7 @@
                <font>
                   <Font size="13.0" />
                </font></Button>
-            <Text layoutX="39.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail">
+            <Text layoutX="39.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Text>
@@ -50,6 +50,12 @@
             <Text layoutX="102.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGN UP" wrappingWidth="129.69598388671875">
                <font>
                   <Font size="30.0" />
+               </font>
+            </Text>
+            <TextField fx:id="tf_contact" layoutX="128.0" layoutY="174.0" prefHeight="25.0" prefWidth="177.0" promptText="+94 123456789" />
+            <Text layoutX="39.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact">
+               <font>
+                  <Font name="System Bold" size="13.0" />
                </font>
             </Text>
          </children>

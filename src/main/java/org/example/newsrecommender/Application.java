@@ -21,12 +21,7 @@ public class  Application implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        button_logout.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "Login.fxml", "Login", null);
-            }
-        });
+
     }
 
     public void setUserInformation(String username ){

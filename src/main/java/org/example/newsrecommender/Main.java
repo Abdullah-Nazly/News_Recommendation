@@ -15,6 +15,9 @@ public class Main extends javafx.application.Application {
         stage.initStyle(StageStyle.DECORATED);
         stage.setScene(scene);
         stage.show();
+
+        DB db = new DB();
+        db.connect();
     }
 
     public static void main(String[] args) {

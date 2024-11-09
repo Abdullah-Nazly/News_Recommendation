@@ -27,36 +27,48 @@ public class SignUp implements Initializable {
     private PasswordField tf_password;
     @FXML
     private TextField tf_email;
+    @FXML
+    private TextField tf_contact;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        button_signup.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if (!tf_username.getText().trim().isEmpty() && !tf_password.getText().trim().isEmpty() && !tf_email.getText().trim().isEmpty()) {
-                    DBUtils.signUpUser(event, tf_username.getText(), tf_password.getText(), tf_email.getText());
-                } else {
-                    System.out.println("Please fill in all the information");
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setContentText("Please fill all the information sign up");
-                    alert.show();
-                }
-            }
-        });
 
-        button_login.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                DBUtils.changeScene(event, "Login.fxml","Login",null);
-            }
-        });
+
 
 
     }
     public void cancelButtonOnAction(ActionEvent event){
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
+    }
+
+    @FXML
+    public void handleSignUp(ActionEvent event) {
+        // Collect input data from text fields
+        String username = tf_username.getText();
+        String password = tf_password.getText();
+        String email = tf_email.getText();
+        int contact = Integer.parseInt(tf_contact.getText());
+
+        // Create a new User object and attempt to register it
+        User newUser = new User(username, password, email, contact);
+        boolean signUpSuccessful = newUser.signUp();
+
+        // Show a confirmation alert based on the outcome
+        if (signUpSuccessful) {
+            showAlert(Alert.AlertType.INFORMATION, "Registration Successful", "User registered successfully!");
+        } else {
+            showAlert(Alert.AlertType.ERROR, "Registration Failed", "There was an error registering the user.");
+        }
+    }
+
+    // Utility method to display alerts
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
