@@ -3,7 +3,10 @@ package org.example.newsrecommender;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -11,10 +14,11 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SignUp implements Initializable {
+public class SignUp {
 
     public Button cancelButton;
     @FXML
@@ -31,17 +35,25 @@ public class SignUp implements Initializable {
     private TextField tf_contact;
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
-
-
-
-    }
     public void cancelButtonOnAction(ActionEvent event){
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
+    }
+
+    public void openLogin() {
+        try {
+            // Load the signup.fxml file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage and set the new scene
+            Stage stage = (Stage) button_signup.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Login");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -50,7 +62,8 @@ public class SignUp implements Initializable {
         String username = tf_username.getText();
         String password = tf_password.getText();
         String email = tf_email.getText();
-        int contact = Integer.parseInt(tf_contact.getText());
+        String contact = tf_contact.getText();
+
 
         // Create a new User object and attempt to register it
         User newUser = new User(username, password, email, contact);

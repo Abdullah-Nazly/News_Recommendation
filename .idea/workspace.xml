@@ -5,16 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ece1d37b-2eca-476a-96e4-066c98152930" name="Changes" comment="First commit">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/DB.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/ReadArticle.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/ReadArticle.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/DBUtils.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/SignUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/SignUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Application.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Application.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Login.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/SignUp.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/SignUp.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,15 +69,16 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
+    "jdk.selected.JAVA_MODULE": "21 (2)",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "A:/Year 2 Semester 1/CourseWorks/OOP/NewsRecommender/src/main/java/org/example/newsrecommender",
-    "last_opened_file_path": "A:/Year 2 Semester 1/CourseWorks/OOP1",
+    "last_opened_file_path": "A:/Year 2 Semester 1/CourseWorks/OOP/NewsRecommender/lib/mysql-connector-j-9.1.0.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "SDKs",
+    "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.29770115",
     "settings.editor.selected.configurable": "configurable.group.appearance",
@@ -136,7 +138,13 @@
       <workItem from="1730910771085" duration="185000" />
       <workItem from="1730916710782" duration="1634000" />
       <workItem from="1730996683773" duration="4921000" />
-      <workItem from="1731179441814" duration="780000" />
+      <workItem from="1731179441814" duration="4147000" />
+      <workItem from="1731228704643" duration="2892000" />
+      <workItem from="1731320217867" duration="4455000" />
+      <workItem from="1731442583197" duration="2222000" />
+      <workItem from="1731492094305" duration="15000" />
+      <workItem from="1731513116875" duration="5281000" />
+      <workItem from="1731530272036" duration="2328000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
