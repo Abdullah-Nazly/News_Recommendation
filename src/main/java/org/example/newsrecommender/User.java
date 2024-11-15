@@ -66,7 +66,7 @@ public class User {
         }
 
         // Check for existing username, email, or contact in the database
-        String checkQuery = "SELECT * FROM Users WHERE username = ? OR email = ? OR contact = ?";
+        String checkQuery = "SELECT * FROM Users WHERE user_name = ? OR email = ? OR contact = ?";
         try (Connection conn = DB.getConnection();
              PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
 
@@ -86,7 +86,7 @@ public class User {
         }
 
         // Insert new user into the database if no duplicates were found
-        String insertQuery = "INSERT INTO Users (username, password, email, contact) VALUES (?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO Users (user_name, password, email, contact) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DB.getConnection();
              PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
@@ -107,7 +107,7 @@ public class User {
 
     // Static method to authenticate a user on login
     public static User login(String username, String password) {
-        String query = "SELECT * FROM Users WHERE username = ? AND password = ?";
+        String query = "SELECT * FROM Users WHERE user_name = ? AND password = ?";
 
         try (Connection conn = DB.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {

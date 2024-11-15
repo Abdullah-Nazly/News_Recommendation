@@ -7,19 +7,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Alert;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ReadArticle implements Initializable {
@@ -28,18 +32,27 @@ public class ReadArticle implements Initializable {
     private ComboBox<String> categoryComboBox;
 
     @FXML
-    private WebView articleWebView;
+    private TextArea articleTextArea;
+
     @FXML
     private Button backButton;
+    @FXML
+    private Button previousButton;
+
+    @FXML
+    private Button nextButton;
 
     private ObservableList<String> categories;
+    private List<String> articleUrls = new ArrayList<>();
+    private int currentArticleIndex = 0;
+
+    private int userId;
+    private long articleId;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadCategories();
-
-        // Load articles when category is selected
-        categoryComboBox.setOnAction(event -> loadArticleByCategory(categoryComboBox.getValue()));
+        categoryComboBox.setOnAction(event -> loadArticlesByCategory(categoryComboBox.getValue()));
     }
 
     private void loadCategories() {
@@ -47,60 +60,77 @@ public class ReadArticle implements Initializable {
         String query = "SELECT DISTINCT category FROM articles";
 
         try (Connection conn = DB.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()) {
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                String category = rs.getString("category");
-                categories.add(category);
+                categories.add(rs.getString("category"));
             }
             categoryComboBox.setItems(categories);
+
         } catch (SQLException e) {
+            showAlert("Database Error", "Unable to load categories.");
             e.printStackTrace();
-            showAlert("Error", "Could not load categories.");
         }
     }
 
-    private void loadArticleByCategory(String category) {
-        String query = "SELECT link FROM articles WHERE category = ? LIMIT 1"; // Load the first article URL for simplicity
+    private void loadArticlesByCategory(String category) {
+        articleUrls.clear();
+        String query = "SELECT link FROM articles WHERE category = ?";
 
         try (Connection conn = DB.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            pstmt.setString(1, category);
-            ResultSet rs = pstmt.executeQuery();
+            stmt.setString(1, category);
+            ResultSet rs = stmt.executeQuery();
 
-            if (rs.next()) {
-                String url = rs.getString("link");
-                loadUrlInWebView(url);
-            } else {
-                showAlert("No Articles", "No articles found in this category.");
+            while (rs.next()) {
+                articleUrls.add(rs.getString("link"));
             }
+
+            if (!articleUrls.isEmpty()) {
+                currentArticleIndex = 0;
+                displayArticleContent(articleUrls.get(currentArticleIndex));
+                enableNavigationButtons();
+            } else {
+                articleTextArea.setText("No articles found in this category.");
+                disableNavigationButtons();
+            }
+
         } catch (SQLException e) {
+            showAlert("Database Error", "Unable to load articles.");
             e.printStackTrace();
-            showAlert("Error", "Could not load article URL.");
         }
     }
 
-    private void loadUrlInWebView(String url) {
-        WebEngine webEngine = articleWebView.getEngine();
-        webEngine.load(url);
-    }
-
-    @FXML
-    private void handleBackButton() {
+    private void displayArticleContent(String articleUrl) {
         try {
-            // Load application.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("application.fxml"));
-            Parent applicationView = loader.load();
+            // Connect to the URL and fetch the HTML content
+            Document doc = Jsoup.connect(articleUrl).get();
 
-            // Get the current stage (the window) and set it to the application.fxml scene
-            Stage stage = (Stage) articleWebView.getScene().getWindow();
-            stage.setScene(new Scene(applicationView));
+            // Extract the paragraphs from the HTML and format them with line breaks
+            StringBuilder articleText = new StringBuilder();
+            doc.select("p").forEach(paragraph -> {
+                String text = paragraph.text().trim();
+                if (!text.isEmpty()) {
+                    articleText.append(text).append("\n"); // Add a line break after each paragraph
+                }
+            });
+
+            // If no paragraphs are found, use the body text as a fallback
+            if (articleText.length() == 0) {
+                articleText.append(doc.body().text().replaceAll("(?<=\\.)\\s+", "\n\n")); // Split on sentence end
+            }
+
+            // Remove the last unnecessary newline at the end of the article
+            String finalText = articleText.toString().trim();
+
+            // Display the formatted text content in TextArea
+            articleTextArea.setText(finalText);
 
         } catch (IOException e) {
+            showAlert("Network Error", "Unable to load the article.");
             e.printStackTrace();
-            System.out.println("Error loading application.fxml");
         }
     }
 
@@ -110,5 +140,55 @@ public class ReadArticle implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void handleBackButton() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("application.fxml"));
+            Parent applicationView = loader.load();
+            Stage stage = (Stage) articleTextArea.getScene().getWindow();
+            stage.setScene(new Scene(applicationView));
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error loading application.fxml");
+        }
+    }
+    @FXML
+    private void handleNextButton() {
+        if (currentArticleIndex < articleUrls.size() - 1) {
+            currentArticleIndex++;
+            displayArticleContent(articleUrls.get(currentArticleIndex));
+            enableNavigationButtons();
+        }
+    }
+
+    @FXML
+    private void handlePreviousButton() {
+        if (currentArticleIndex > 0) {
+            currentArticleIndex--;
+            displayArticleContent(articleUrls.get(currentArticleIndex));
+            enableNavigationButtons();
+        }
+    }
+
+    private void enableNavigationButtons() {
+        // Enable or disable the navigation buttons based on the index
+        previousButton.setDisable(currentArticleIndex == 0);
+        nextButton.setDisable(currentArticleIndex == articleUrls.size() - 1);
+    }
+
+    private void disableNavigationButtons() {
+        previousButton.setDisable(true);
+        nextButton.setDisable(true);
+    }
+
+    // Setter methods for userId and articleId
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setArticleId(long articleId) {
+        this.articleId = articleId;
     }
 }

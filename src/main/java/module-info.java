@@ -5,9 +5,8 @@ module org.example.newsrecommender {
     requires javafx.graphics;
     requires mysql.connector.j;
     requires javafx.web;
+    requires org.jsoup;
 
-    exports org.example.newsrecommender;
     opens org.example.newsrecommender to javafx.fxml;
-
-
+    exports org.example.newsrecommender;
 }

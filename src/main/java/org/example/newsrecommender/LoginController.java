@@ -69,6 +69,9 @@ public class LoginController implements Initializable {
             showAlert(Alert.AlertType.ERROR, "Login Error", "Invalid username or password.");
         } else {
             // Login successful, load application.fxml
+            // Record the login in the user_logins table
+            UserLogs userLogin = new UserLogs();
+            userLogin.recordLogin(user.getUserId());  // Pass the user_id of the logged-in user
             loadApplication();
         }
     }
