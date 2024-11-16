@@ -10,8 +10,8 @@
       <Button fx:id="nextButton" layoutX="524.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleNextButton" prefHeight="25.0" prefWidth="61.0" text="Next" />
       <Button fx:id="previousButton" layoutX="456.0" layoutY="283.0" mnemonicParsing="false" onAction="#handlePreviousButton" text="Previous" />
       <Button fx:id="backButton" layoutX="545.0" layoutY="363.0" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
-      <ComboBox fx:id="categoryComboBox" layoutX="14.0" layoutY="283.0" prefWidth="150.0" promptText="Select category" />
-      <Button fx:id="LikeButton" layoutX="193.0" layoutY="282.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="41.0" text="Like" />
+      <ComboBox fx:id="categoryComboBox" layoutX="14.0" layoutY="283.0" onAction="#handleCategorySelection" prefWidth="150.0" promptText="Select category" />
+      <Button fx:id="LikeButton" layoutX="193.0" layoutY="282.0" mnemonicParsing="false" onAction="#handleLikeButton" prefHeight="25.0" prefWidth="41.0" text="Like" />
       <TextArea fx:id="articleTextArea" layoutX="2.0" layoutY="7.0" prefHeight="267.0" prefWidth="600.0" />
    </children>
 </AnchorPane>

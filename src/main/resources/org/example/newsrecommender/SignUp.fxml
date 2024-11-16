@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.SignUp">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.user.SignUp">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="242.0">
          <children>
@@ -32,7 +32,7 @@
                   <Font name="System Bold" size="13.0" />
                </font></Text>
             <TextField fx:id="tf_username" layoutX="128.0" layoutY="60.0" prefHeight="25.0" prefWidth="177.0" promptText="User Name" />
-            <Button fx:id="button_signup" layoutX="82.0" layoutY="252.0" mnemonicParsing="false" onAction="#handleSignUp" prefHeight="25.0" prefWidth="170.0" style="-fx-cursor: hand;" text="Sign up" />
+            <Button fx:id="button_signup" layoutX="82.0" layoutY="279.0" mnemonicParsing="false" onAction="#signUpAction" prefHeight="25.0" prefWidth="170.0" style="-fx-cursor: hand;" text="Sign up" />
             <Text layoutX="73.0" layoutY="357.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Already a Memeber :">
                <font>
                   <Font size="13.0" />
@@ -46,7 +46,7 @@
                   <Font name="System Bold" size="13.0" />
                </font></Text>
             <TextField fx:id="tf_email" layoutX="128.0" layoutY="134.0" prefHeight="25.0" prefWidth="177.0" promptText="name@example.com" />
-            <Button fx:id="cancelButton" layoutX="82.0" layoutY="285.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="25.0" prefWidth="170.0" text="Cancel" />
+            <Button fx:id="cancelButton" layoutX="82.0" layoutY="314.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="170.0" text="Cancel" />
             <Text layoutX="102.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGN UP" wrappingWidth="129.69598388671875">
                <font>
                   <Font size="30.0" />
@@ -58,6 +58,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Text>
+            <Text layoutX="37.0" layoutY="231.0" strokeType="OUTSIDE" strokeWidth="0.0" text="preferences" />
          </children>
       </AnchorPane>
    </children>
