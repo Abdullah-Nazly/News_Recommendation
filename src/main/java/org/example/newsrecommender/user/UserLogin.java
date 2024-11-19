@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.example.newsrecommender.db.DB;
 
 import java.io.IOException;
@@ -25,6 +26,14 @@ public class UserLogin {
     private TextField tf_username;
     @FXML
     private PasswordField tf_password;
+    private MongoDatabase database;
+    private UserLogs userLogs;
+
+    public UserLogin() {
+        // Initialize database and UserLogs instance
+        this.database = DB.getDatabase();
+        this.userLogs = new UserLogs(database);
+    }
 
     @FXML
     public void openSignUp() {
@@ -57,13 +66,19 @@ public class UserLogin {
 
         // Check if the username and password match in the database
         if (isValidUser(username, password)) {
-            // If valid, navigate to the main application
-            navigateToApplication();
+            ObjectId userId = getUserId(username); // Fetch user ID
+            if (userId != null) {
+                userLogs.recordLogin(userId, username); // Record login with both user ID and username
+
+                navigateToApplication(); // Navigate to the main application
+            } else {
+                showAlert("Login Error", "User ID not found.");
+            }
         } else {
-            // If invalid, show an error alert
             showAlert("Login Failed", "Invalid username or password.");
         }
     }
+
 
     @FXML
     private void cancelAction() {
@@ -98,6 +113,16 @@ public class UserLogin {
         Document result = usersCollection.find(query).first();
 
         return result != null; // Return true if a user was found, false otherwise
+    }
+
+    // Helper method to get user ID based on the username
+    private ObjectId getUserId(String username) {
+        var usersCollection = database.getCollection("users");
+        Document query = new Document("username", username);
+        Document result = usersCollection.find(query).first();
+
+        // Assuming user_id is stored as an integer in the collection
+        return result != null ? result.getObjectId("_id") : null;
     }
 
     // Helper method to navigate to the application screen (application.fxml)

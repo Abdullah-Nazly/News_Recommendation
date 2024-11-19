@@ -27,7 +27,7 @@
             <Text layoutX="45.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
             <Button fx:id="loginbutton" layoutX="101.0" layoutY="248.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="25.0" prefWidth="126.0" text="Login" />
             <Text layoutX="59.0" layoutY="357.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dont have an Account ?" />
-            <Button fx:id="signinbutton" layoutX="202.0" layoutY="340.0" mnemonicParsing="false" onAction="#openSignUp" text="Sign in" />
+            <Button fx:id="signinbutton" layoutX="202.0" layoutY="340.0" mnemonicParsing="false" onAction="#openSignUp" text="Sign up" />
             <Button layoutX="102.0" layoutY="290.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="126.0" text="cancel" />
             <PasswordField fx:id="tf_password" layoutX="127.0" layoutY="160.0" />
          </children>

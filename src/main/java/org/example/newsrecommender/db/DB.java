@@ -8,7 +8,6 @@ public class DB {
 
     private static final String CONNECTION_STRING = "mongodb://localhost:27017"; // MongoDB URI
     private static final String DATABASE_NAME = "News_recommender"; // Database name
-
     private static MongoClient mongoClient;
     private static MongoDatabase database;
 

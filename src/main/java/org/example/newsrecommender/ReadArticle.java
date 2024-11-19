@@ -6,155 +6,153 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.stage.Stage;
 import org.bson.Document;
 import org.example.newsrecommender.db.DB;
+import org.example.newsrecommender.user.UserLikes;
 import org.jsoup.Jsoup;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ReadArticle implements Initializable {
-
     @FXML
-    private ComboBox<String> categoryComboBox;  // ComboBox to display categories
-
+    private ComboBox<String> categoryComboBox;
     @FXML
-    private TextArea articleTextArea;  // TextArea to display the article content
-
+    private TextArea articleTextArea;
     @FXML
     private Button previousButton;
-
     @FXML
     private Button nextButton;
+    @FXML
+    private Button backButton;
 
-    private ObservableList<String> categories;  // List to hold category names
-    private List<String> articleUrls = new ArrayList<>();  // List of article URLs
-    private int currentArticleIndex = 0;  // Current article index for navigation
-
-    private MongoDatabase database;  // MongoDatabase instance
+    private ObservableList<String> categories;
+    private List<Document> articles = new ArrayList<>();
+    private int currentArticleIndex = 0;
+    private MongoDatabase database;
+    private UserLikes userLikes;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Initialize MongoDB connection (assumed that DB.getDatabase() gives the database)
         database = DB.getDatabase();
-
-        // Fetch and populate the ComboBox with categories
+        userLikes = new UserLikes(database);
         fetchCategories();
     }
 
-    // Method to fetch available categories from the database and populate ComboBox
     private void fetchCategories() {
         MongoCollection<Document> articlesCollection = database.getCollection("articles");
-
-        // List to store category names
         List<String> categoryList = new ArrayList<>();
-
-        // Fetch distinct categories from the database
         articlesCollection.distinct("category", String.class).forEach(categoryList::add);
-
-        // Convert the category list to an ObservableList
         categories = FXCollections.observableArrayList(categoryList);
-
-        // Set the ComboBox items to the list of categories
         categoryComboBox.setItems(categories);
-
     }
 
-    // Handle the category selection and load the article(s) from the database
     @FXML
     public void handleCategorySelection(ActionEvent event) {
         String selectedCategory = categoryComboBox.getSelectionModel().getSelectedItem();
         if (selectedCategory != null) {
-            System.out.println("Selected Category: " + selectedCategory);
-
-            // Fetch articles of the selected category
             fetchArticlesByCategory(selectedCategory);
         }
     }
 
-    // Method to fetch articles of the selected category from the database
     private void fetchArticlesByCategory(String selectedCategory) {
         MongoCollection<Document> articlesCollection = database.getCollection("articles");
-
-        // Query to fetch articles from the selected category
-        List<Document> articles = articlesCollection.find(new Document("category", selectedCategory)).into(new ArrayList<>());
-
-        // Clear the list of article URLs
-        articleUrls.clear();
-
-        // Add the article URLs to the list
-        for (Document article : articles) {
-            articleUrls.add(article.getString("link"));  // Assuming the link field stores the article URL
-        }
-
-        // If there are articles, load the first one
-        if (!articleUrls.isEmpty()) {
-            loadArticleContent(articleUrls.get(0));
+        articles = articlesCollection.find(new Document("category", selectedCategory)).into(new ArrayList<>());
+        currentArticleIndex = 0;
+        if (!articles.isEmpty()) {
+            loadArticleContent(articles.get(currentArticleIndex));
         } else {
             showAlert("No Articles", "No articles found in this category.");
         }
     }
 
-    // Method to load the content of the article based on the URL
-    private void loadArticleContent(String articleUrl) {
+    private void loadArticleContent(Document article) {
+        String articleLink = article.getString("link");
+        String articleContent = fetchContentFromUrl(articleLink);
+        articleTextArea.setText(articleContent);
+    }
+
+    private String fetchContentFromUrl(String url) {
         try {
-            // Fetch the article content from the link using JSoup
-            org.jsoup.nodes.Document doc = Jsoup.connect(articleUrl).get();  // No aliasing needed here
-
-            // Extract the article content (you can customize this based on the structure of the article page)
+            org.jsoup.nodes.Document doc = Jsoup.connect(url).get();
             StringBuilder articleContent = new StringBuilder();
-
-            // Extract text from each paragraph <p> and add a line break after each
-            doc.select("p").forEach(paragraph -> {
-                articleContent.append(paragraph.text()).append("\n");  // Add two line breaks for readability
-            });
-
-            // Display the article content in the TextArea
-            articleTextArea.setText(articleContent.toString());
-
+            doc.select("p").forEach(paragraph -> articleContent.append(paragraph.text()).append("\n"));
+            return articleContent.toString();
         } catch (IOException e) {
             e.printStackTrace();
             showAlert("Error", "Failed to load article from the link.");
+            return "";
         }
     }
 
-    // Method to show alert
+    @FXML
+    public void handleNextButton(ActionEvent event) {
+        if (currentArticleIndex < articles.size() - 1) {
+            currentArticleIndex++;
+            loadArticleContent(articles.get(currentArticleIndex));
+        }
+    }
+
+    @FXML
+    public void handlePreviousButton(ActionEvent event) {
+        if (currentArticleIndex > 0) {
+            currentArticleIndex--;
+            loadArticleContent(articles.get(currentArticleIndex));
+        }
+    }
+
+    @FXML
+    public void handleLikeButton(ActionEvent event) {
+        if (!articles.isEmpty()) {
+            Document currentArticle = articles.get(currentArticleIndex);
+            String articleCategory = currentArticle.getString("category");
+
+            // Record the like event and get the result
+            boolean isLiked = userLikes.recordLike(articleCategory);
+
+            // Show alert based on whether the category was successfully added or already present
+            if (isLiked) {
+                showAlert("Liked", "Category added to your likes!");
+            } else {
+                showAlert("Already Liked", "This category is already in your likes.");
+            }
+        } else {
+            showAlert("Error", "No article loaded to like.");
+        }
+    }
+
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
-        alert.setHeaderText(null);  // No header text
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
 
-    // Placeholder methods for navigation (previous and next buttons)
-    public void handleNextButton(ActionEvent event) {
-        if (currentArticleIndex < articleUrls.size() - 1) {
-            currentArticleIndex++;
-            loadArticleContent(articleUrls.get(currentArticleIndex));
+
+    @FXML
+    private void handleBackButton() {
+        try {
+            Stage stage = (Stage) backButton.getScene().getWindow(); // Get current stage from user_button
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Application.fxml")));
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public void handlePreviousButton(ActionEvent event) {
-        if (currentArticleIndex > 0) {
-            currentArticleIndex--;
-            loadArticleContent(articleUrls.get(currentArticleIndex));
-        }
-    }
-
-    public void handleBackButton(ActionEvent event) {
-        // Handle back button (navigate to previous screen)
-    }
-
-    public void handleLikeButton(ActionEvent event) {
-        // Handle like button functionality
-    }
 }
+
