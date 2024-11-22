@@ -3,9 +3,12 @@ package org.example.newsrecommender.user;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.example.newsrecommender.db.DB;
 
 public class User {
+
+    private ObjectId userId; // Add userId field
 
     private String username;
     private String password;
@@ -19,8 +22,20 @@ public class User {
         this.email = email;
         this.contact = contact;
     }
+    // Constructor with userId (for existing users retrieved from database)
+    public User(ObjectId userId, String username, String password, String email, String contact) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.contact = contact;
+    }
 
     // Getters and setters
+
+    public ObjectId getUserId() {
+        return userId;
+    }
     public String getUsername() {
         return username;
     }
@@ -67,4 +82,6 @@ public class User {
 
         usersCollection.insertOne(document); // Insert the user document into the collection
     }
+
+
 }

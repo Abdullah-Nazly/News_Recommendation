@@ -15,4 +15,6 @@ module org.example.newsrecommender {
     opens org.example.newsrecommender.db to javafx.fxml;
     exports org.example.newsrecommender.user;
     opens org.example.newsrecommender.user to javafx.fxml;
+    exports org.example.newsrecommender.Admin;
+    opens org.example.newsrecommender.Admin to javafx.fxml;
 }

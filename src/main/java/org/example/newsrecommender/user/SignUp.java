@@ -48,40 +48,37 @@ public class SignUp {
 
    @FXML
     public void signUpAction() {
-        // Get the input data from the fields and trim leading/trailing spaces
         String username = tf_username.getText().trim();
         String password = tf_password.getText().trim();
         String email = tf_email.getText().trim();
         String contact = tf_contact.getText().trim();
 
-        // Perform validation
         if (username.isEmpty() || password.isEmpty() || email.isEmpty() || contact.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Form Error", "All fields are required. Please fill out all fields.");
-            return; // Stop the method if validation fails
+            return;
         }
 
-        // Validate the contact number (must be 10 digits)
         if (!contact.matches("\\d{10}")) {
             showAlert(Alert.AlertType.ERROR, "Form Error", "Contact number must be exactly 10 digits.");
-            return; // Stop the method if validation fails
+            return;
         }
 
-        // Check if the username, email, or contact already exists in the database
         if (isDuplicateUser(username, email, contact)) {
             showAlert(Alert.AlertType.ERROR, "Duplicate Entry", "Username, email, or contact number already exists. Please choose different values.");
-            return; // Stop the method if there is a duplicate
+            return;
         }
 
-        // Create a new User object with the input data
-        User newUser = new User(username, password, email, contact);
+        // Create a new User object and set properties incrementally
+        User newUser = new User("", "", "", ""); // Or use an empty constructor if available
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+        newUser.setEmail(email);
+        newUser.setContact(contact);
 
-        // Save the user data to the MongoDB collection
         newUser.saveToDatabase();
 
-        // Show a success message
         showAlert(Alert.AlertType.INFORMATION, "Registration Successful", "User " + username + " successfully registered.");
 
-        // Optionally clear the fields after saving
         tf_username.clear();
         tf_password.clear();
         tf_email.clear();

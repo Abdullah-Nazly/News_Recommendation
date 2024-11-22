@@ -12,16 +12,15 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.example.newsrecommender.Admin.LoginHandler;
 import org.example.newsrecommender.db.DB;
 
 import java.io.IOException;
 
-public class UserLogin {
+public class UserLogin extends LoginHandler {
 
     @FXML
     private Button signinbutton;
-    @FXML
-    private Button button_cancel;
     @FXML
     private TextField tf_username;
     @FXML
@@ -53,31 +52,27 @@ public class UserLogin {
     }
 
     @FXML
-    public void loginAction() {
-        // Get the input data from the fields and trim leading/trailing spaces
-        String username = tf_username.getText().trim();
-        String password = tf_password.getText().trim();
+public void loginAction() {
+    String username = tf_username.getText().trim();
+    String password = tf_password.getText().trim();
 
-        // Validate input fields
-        if (username.isEmpty() || password.isEmpty()) {
-            showAlert("Form Error", "Username and password must not be empty.");
-            return;
-        }
-
-        // Check if the username and password match in the database
-        if (isValidUser(username, password)) {
-            ObjectId userId = getUserId(username); // Fetch user ID
-            if (userId != null) {
-                userLogs.recordLogin(userId, username); // Record login with both user ID and username
-
-                navigateToApplication(); // Navigate to the main application
-            } else {
-                showAlert("Login Error", "User ID not found.");
-            }
-        } else {
-            showAlert("Login Failed", "Invalid username or password.");
-        }
+    if (username.isEmpty() || password.isEmpty()) {
+        showAlert("Form Error", "Username and password must not be empty.");
+        return;
     }
+
+    if (verifyCredentials(password)) {
+        User user = getUserByUsername(username);
+        if (user != null) {
+            userLogs.recordLogin(user.getUserId(), user.getUsername()); // Using getters from the User class
+            navigateToApplication();
+        } else {
+            showAlert("Login Error", "User not found.");
+        }
+    } else {
+        showAlert("Login Failed", "Invalid username or password.");
+    }
+}
 
 
     @FXML
@@ -96,50 +91,34 @@ public class UserLogin {
     }
 
     // Helper method to validate the username and password from the database
-    private boolean isValidUser(String username, String password) {
-        MongoDatabase database = DB.getDatabase(); // Get the database instance
-        if (database == null) {
-            showAlert("Error", "Database connection error.");
-            return false;
-        }
-
+    @Override
+    protected boolean verifyCredentials(String password) {
+        String username = tf_username.getText().trim();
         var usersCollection = database.getCollection("users");
-
-        // Query the database for a matching username and password
-        Document query = new Document("username", username)
-                .append("password", password);
-
-        // Return true if a matching document is found
-        Document result = usersCollection.find(query).first();
-
-        return result != null; // Return true if a user was found, false otherwise
+        Document query = new Document("username", username).append("password", password);
+        return usersCollection.find(query).first() != null;
     }
 
     // Helper method to get user ID based on the username
-    private ObjectId getUserId(String username) {
-        var usersCollection = database.getCollection("users");
-        Document query = new Document("username", username);
-        Document result = usersCollection.find(query).first();
+    private User getUserByUsername(String username) {
+    var usersCollection = database.getCollection("users");
+    Document query = new Document("username", username);
+    Document result = usersCollection.find(query).first();
 
-        // Assuming user_id is stored as an integer in the collection
-        return result != null ? result.getObjectId("_id") : null;
+    if (result != null) {
+        String fetchedUsername = result.getString("username");
+        String fetchedPassword = result.getString("password");
+        String fetchedEmail = result.getString("email");
+        String fetchedContact = result.getString("contact");
+
+        return new User(fetchedUsername, fetchedPassword, fetchedEmail, fetchedContact);
     }
+    return null;
+}
 
     // Helper method to navigate to the application screen (application.fxml)
     private void navigateToApplication() {
-        try {
-            // Load the application.fxml file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/Application.fxml"));
-            Parent root = loader.load();
-
-            // Get the current stage and set the new scene
-            Stage stage = (Stage) signinbutton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Application");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Error", "Failed to load the application screen.");
-        }
+        Stage stage = (Stage) signinbutton.getScene().getWindow();
+        navigateToView(stage, "/org/example/newsrecommender/Application.fxml", "Application");
     }
 }
