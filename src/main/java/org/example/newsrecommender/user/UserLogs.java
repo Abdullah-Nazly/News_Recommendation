@@ -4,7 +4,6 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-
 import java.util.Date;
 
 public class UserLogs {
@@ -16,18 +15,29 @@ public class UserLogs {
         this.database = database;
     }
 
-    // Method to insert a new login record with both user_id and user_name
+    // Method to record a user login with user ID and username
     public void recordLogin(ObjectId userId, String userName) {
         MongoCollection<Document> loginsCollection = database.getCollection("user_logins");
 
-        // Create a document with user_id, user_name, and login_time fields
+        // Create a new document with login details
         Document loginDocument = new Document("user_id", userId)
-                .append("user_name", userName)  // Add user_name to the login document
-                .append("login_time", new Date());  // Log the current timestamp
+                .append("user_name", userName)  // Add user name to the document
+                .append("login_time", new Date());  // Log the timestamp of the login
 
         // Insert the document into the collection
         loginsCollection.insertOne(loginDocument);
 
-        System.out.println("User login recorded successfully for user_id: " + userId + ", user_name: " + userName);
+        System.out.println("Login recorded for user: " + userName + " (ID: " + userId + ")");
+    }
+
+    // Method to fetch the most recent login entry for a user
+    public Document getLastLoginForUser(ObjectId userId) {
+        MongoCollection<Document> loginsCollection = database.getCollection("user_logins");
+
+        // Find the most recent login for the specified user_id
+        return loginsCollection.find(new Document("user_id", userId))
+                .sort(new Document("login_time", -1)) // Sort by login time descending
+                .first();
     }
 }
+

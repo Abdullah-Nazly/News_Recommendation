@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.example.newsrecommender.Admin.LoginHandler;
+import org.example.newsrecommender.Session;
 import org.example.newsrecommender.db.DB;
 
 import java.io.IOException;
@@ -21,6 +22,8 @@ public class UserLogin extends LoginHandler {
 
     @FXML
     private Button signinbutton;
+    @FXML
+    private Button button_cancel;
     @FXML
     private TextField tf_username;
     @FXML
@@ -52,27 +55,28 @@ public class UserLogin extends LoginHandler {
     }
 
     @FXML
-public void loginAction() {
-    String username = tf_username.getText().trim();
-    String password = tf_password.getText().trim();
+    public void loginAction() {
+        String username = tf_username.getText().trim();
+        String password = tf_password.getText().trim();
 
-    if (username.isEmpty() || password.isEmpty()) {
-        showAlert("Form Error", "Username and password must not be empty.");
-        return;
-    }
-
-    if (verifyCredentials(password)) {
-        User user = getUserByUsername(username);
-        if (user != null) {
-            userLogs.recordLogin(user.getUserId(), user.getUsername()); // Using getters from the User class
-            navigateToApplication();
-        } else {
-            showAlert("Login Error", "User not found.");
+        if (username.isEmpty() || password.isEmpty()) {
+            showAlert("Form Error", "Username and password must not be empty.");
+            return;
         }
-    } else {
-        showAlert("Login Failed", "Invalid username or password.");
+
+        if (verifyCredentials(password)) {
+            User user = getUserByUsername(username);
+            if (user != null) {
+                Session.setCurrentUser(user);  // Set current user in Session
+                userLogs.recordLogin(user.getUserId(), user.getUsername()); // Using getters from the User class
+                navigateToApplication();
+            } else {
+                showAlert("Login Error", "User not found.");
+            }
+        } else {
+            showAlert("Login Failed", "Invalid username or password.");
+        }
     }
-}
 
 
     @FXML
@@ -101,20 +105,22 @@ public void loginAction() {
 
     // Helper method to get user ID based on the username
     private User getUserByUsername(String username) {
-    var usersCollection = database.getCollection("users");
-    Document query = new Document("username", username);
-    Document result = usersCollection.find(query).first();
+        var usersCollection = database.getCollection("users");
+        Document query = new Document("username", username);
+        Document result = usersCollection.find(query).first();
 
-    if (result != null) {
-        String fetchedUsername = result.getString("username");
-        String fetchedPassword = result.getString("password");
-        String fetchedEmail = result.getString("email");
-        String fetchedContact = result.getString("contact");
+        if (result != null) {
+            String fetchedUsername = result.getString("username");
+            String fetchedPassword = result.getString("password");
+            String fetchedEmail = result.getString("email");
+            String fetchedContact = result.getString("contact");
+            ObjectId userId = result.getObjectId("_id");
 
-        return new User(fetchedUsername, fetchedPassword, fetchedEmail, fetchedContact);
+
+            return new User(userId, fetchedUsername, fetchedPassword, fetchedEmail, fetchedContact);
+        }
+        return null;
     }
-    return null;
-}
 
     // Helper method to navigate to the application screen (application.fxml)
     private void navigateToApplication() {

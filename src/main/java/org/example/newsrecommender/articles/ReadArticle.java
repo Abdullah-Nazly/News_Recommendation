@@ -1,0 +1,144 @@
+package org.example.newsrecommender.articles;
+
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+import org.example.newsrecommender.Session;
+import org.example.newsrecommender.db.DB;
+import org.example.newsrecommender.user.User;
+import org.example.newsrecommender.user.UserLikes;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public class ReadArticle {
+    @FXML
+    private ComboBox<String> categoryComboBox;
+    @FXML
+    private TextArea articleTextArea;
+    @FXML
+    private ScrollPane headlinesScrollPane;
+    @FXML
+    private VBox headlinesVBox;
+    @FXML
+    private Button backButton;
+    @FXML
+    private Button likeButton;
+
+    private ContentLoader articleLoader;
+    private ObservableList<String> categories;
+    private List<Document> articles;
+    private int currentArticleIndex = 0;
+    private MongoDatabase database;
+    private UserLikes userLikes;  // Instance of UserLikes to handle like logic
+
+
+
+
+     public ReadArticle() {
+        // Initialize the database connection
+        this.database = DB.getDatabase();
+
+        // Initialize article loader and like handler with their required dependencies
+        this.articleLoader = new ArticleLoader(database);  // Polymorphism in action
+        this.userLikes = new UserLikes(database);  // Initialize UserLikes
+    }
+
+    @FXML
+    public void initialize() {
+        loadCategories();
+    }
+
+    private void loadCategories() {
+        MongoCollection<Document> collection = DB.getDatabase().getCollection("articles");
+        List<String> categoryList = collection.distinct("category", String.class).into(new ArrayList<>());
+        categories = FXCollections.observableArrayList(categoryList);
+        categoryComboBox.setItems(categories);
+    }
+
+    @FXML
+    public void handleCategorySelection(ActionEvent event) {
+        String selectedCategory = categoryComboBox.getSelectionModel().getSelectedItem();
+        if (selectedCategory != null) {
+            loadHeadlinesByCategory(selectedCategory);
+
+            User currentUser = Session.getCurrentUser();
+            if (currentUser != null) {
+                userLikes.addClickPoints(currentUser.getUserId(), selectedCategory);
+            }
+        }
+    }
+
+    private void loadHeadlinesByCategory(String selectedCategory) {
+        articles = articleLoader.loadArticles(selectedCategory);
+        headlinesVBox.getChildren().clear();
+
+        for (int i = 0; i < articles.size(); i++) {
+            Document article = articles.get(i);
+            String headline = article.getString("headline");
+
+            Label headlineLabel = new Label((i + 1) + ". " + headline);
+            headlineLabel.setStyle("-fx-font-size: 10px; -fx-padding: 6px;");
+            headlineLabel.setOnMouseEntered(event -> headlineLabel.setStyle("-fx-font-size: 10px;-fx-padding: 6px;-fx-cursor: hand;"));
+            headlineLabel.setOnMouseExited(event -> headlineLabel.setStyle("-fx-font-size: 10px;-fx-padding: 6px;-fx-cursor: default;"));
+
+            headlineLabel.setOnMouseClicked(event -> loadArticleContent(article));
+            headlinesVBox.getChildren().add(headlineLabel);
+        }
+    }
+
+    private void loadArticleContent(Document article) {
+        String articleLink = article.getString("link");
+        String content = articleLoader.loadArticleContentFromUrl(articleLink);
+        articleTextArea.setText(content);
+    }
+
+    @FXML
+    public void handleLikeButton(ActionEvent event) {
+        if (articles != null && !articles.isEmpty()) {
+            Document currentArticle = articles.get(0);  // Assuming the first article as an example
+            String articleCategory = currentArticle.getString("category");
+
+            User currentUser = Session.getCurrentUser();
+            if (currentUser != null) {
+                userLikes.addCategoryLike(currentUser.getUserId(), articleCategory);
+                showAlert("Liked", "You liked the category: " + articleCategory);
+            } else {
+                showAlert("Error", "User not logged in.");
+            }
+        } else {
+            showAlert("Error", "No articles loaded. Please select a category first.");
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void handleBackButton() {
+        try {
+            Stage stage = (Stage) backButton.getScene().getWindow();
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/newsrecommender/Application.fxml")));
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
