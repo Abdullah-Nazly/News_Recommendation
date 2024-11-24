@@ -13,11 +13,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 import org.example.newsrecommender.Session;
 import org.example.newsrecommender.db.DB;
 import org.example.newsrecommender.user.User;
-import org.example.newsrecommender.user.UserLikes;
+import org.example.newsrecommender.user.UserPoints;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,18 +42,12 @@ public class ReadArticle {
     private List<Document> articles;
     private int currentArticleIndex = 0;
     private MongoDatabase database;
-    private UserLikes userLikes;  // Instance of UserLikes to handle like logic
+    private UserPoints userPoints;
 
-
-
-
-     public ReadArticle() {
-        // Initialize the database connection
+    public ReadArticle() {
         this.database = DB.getDatabase();
-
-        // Initialize article loader and like handler with their required dependencies
-        this.articleLoader = new ArticleLoader(database);  // Polymorphism in action
-        this.userLikes = new UserLikes(database);  // Initialize UserLikes
+        this.articleLoader = new ArticleLoader(database);
+        this.userPoints = new UserPoints(database);
     }
 
     @FXML
@@ -74,10 +67,9 @@ public class ReadArticle {
         String selectedCategory = categoryComboBox.getSelectionModel().getSelectedItem();
         if (selectedCategory != null) {
             loadHeadlinesByCategory(selectedCategory);
-
             User currentUser = Session.getCurrentUser();
             if (currentUser != null) {
-                userLikes.addClickPoints(currentUser.getUserId(), selectedCategory);
+                userPoints.addClickPoints(currentUser.getUserId(), selectedCategory);
             }
         }
     }
@@ -109,13 +101,49 @@ public class ReadArticle {
     @FXML
     public void handleLikeButton(ActionEvent event) {
         if (articles != null && !articles.isEmpty()) {
-            Document currentArticle = articles.get(0);  // Assuming the first article as an example
+            Document currentArticle = articles.get(0);
             String articleCategory = currentArticle.getString("category");
 
             User currentUser = Session.getCurrentUser();
             if (currentUser != null) {
-                userLikes.addCategoryLike(currentUser.getUserId(), articleCategory);
+                userPoints.addCategoryLike(currentUser.getUserId(), articleCategory);
                 showAlert("Liked", "You liked the category: " + articleCategory);
+            } else {
+                showAlert("Error", "User not logged in.");
+            }
+        } else {
+            showAlert("Error", "No articles loaded. Please select a category first.");
+        }
+    }
+
+    @FXML
+    public void handleDislikeButton(ActionEvent event) {
+        if (articles != null && !articles.isEmpty()) {
+            Document currentArticle = articles.get(0);
+            String articleCategory = currentArticle.getString("category");
+
+            User currentUser = Session.getCurrentUser();
+            if (currentUser != null) {
+                userPoints.dislikeCategory(currentUser.getUserId(), articleCategory);
+                showAlert("Disliked", "You disliked the category: " + articleCategory);
+            } else {
+                showAlert("Error", "User not logged in.");
+            }
+        } else {
+            showAlert("Error", "No articles loaded. Please select a category first.");
+        }
+    }
+
+    @FXML
+    public void handleSaveButton(ActionEvent event) {
+        if (articles != null && !articles.isEmpty()) {
+            Document currentArticle = articles.get(0);
+            String articleCategory = currentArticle.getString("category");
+
+            User currentUser = Session.getCurrentUser();
+            if (currentUser != null) {
+                userPoints.saveCategory(currentUser.getUserId(), articleCategory);
+                showAlert("Saved", "You saved the category: " + articleCategory);
             } else {
                 showAlert("Error", "User not logged in.");
             }

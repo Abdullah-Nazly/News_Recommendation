@@ -1,28 +1,26 @@
 package org.example.newsrecommender;
 
 import org.example.newsrecommender.user.User;
+import com.mongodb.client.MongoDatabase;
 
 public class Session {
 
-    // Declare a static variable to hold the current user
     private static User currentUser;
 
-    // Set the current user
-    public static void setCurrentUser(User user) {
+    // Set the current user, ensure that UserLikes is initialized in User
+    public static void setCurrentUser(User user, MongoDatabase database) {
         currentUser = user;
+        currentUser.initializeUserLikes(database);  // Ensure UserLikes is initialized
     }
 
-    // Get the current user
     public static User getCurrentUser() {
         return currentUser;
     }
 
-    // Check if a user is logged in
     public static boolean isLoggedIn() {
         return currentUser != null;
     }
 
-    // Log the user out (clear the session)
     public static void logout() {
         currentUser = null;
     }

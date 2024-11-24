@@ -9,14 +9,16 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.articles.ReadArticle">
    <children>
-      <Button fx:id="backButton" layoutX="545.0" layoutY="363.0" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
+      <Button fx:id="backButton" layoutX="605.0" layoutY="363.0" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
       <ComboBox fx:id="categoryComboBox" layoutX="14.0" layoutY="283.0" onAction="#handleCategorySelection" prefHeight="25.0" prefWidth="169.0" promptText="Select category" />
-      <Button fx:id="LikeButton" layoutX="240.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleLikeButton" prefHeight="25.0" prefWidth="41.0" text="Like" />
+      <Button fx:id="LikeButton" layoutX="540.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleLikeButton" prefHeight="25.0" prefWidth="51.0" text="Like" />
       <TextArea fx:id="articleTextArea" layoutX="197.0" layoutY="7.0" prefHeight="267.0" prefWidth="456.0" />
       <ScrollPane fx:id="headlinesScrollPane" layoutX="14.0" layoutY="6.0" prefHeight="267.0" prefWidth="169.0">
          <content>
             <VBox fx:id="headlinesVBox" prefHeight="265.0" prefWidth="167.0" />
          </content>
       </ScrollPane>
+      <Button fx:id="DislikeButton" layoutX="596.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleDislikeButton" text="Dislike" />
+      <Button fx:id="SaveButton" layoutX="197.0" layoutY="283.0" mnemonicParsing="false" onAction="#handleSaveButton" text="Save" />
    </children>
 </AnchorPane>

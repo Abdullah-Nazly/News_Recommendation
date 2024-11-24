@@ -18,5 +18,6 @@
          </font>
       </Button>
       <Button fx:id="readbutton" layoutX="38.0" layoutY="110.0" mnemonicParsing="false" onAction="#openArticle" prefHeight="89.0" prefWidth="101.0" text="Read Article" />
+      <Button fx:id="openRecommendation" layoutX="249.0" layoutY="110.0" mnemonicParsing="false" onAction="#openRecommendation" prefHeight="89.0" prefWidth="101.0" text="Recommended&#10;Articles" textAlignment="CENTER" />
    </children>
 </AnchorPane>

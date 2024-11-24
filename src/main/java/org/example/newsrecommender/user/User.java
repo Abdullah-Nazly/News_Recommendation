@@ -14,6 +14,8 @@ public class User {
     private String password;
     private String email;
     private String contact;
+    private UserPoints userLikes;
+
 
     // Constructor
     public User(String username, String password, String email, String contact) {
@@ -21,6 +23,7 @@ public class User {
         this.password = password;
         this.email = email;
         this.contact = contact;
+
     }
     // Constructor with userId (for existing users retrieved from database)
     public User(ObjectId userId, String username, String password, String email, String contact) {
@@ -29,6 +32,7 @@ public class User {
         this.password = password;
         this.email = email;
         this.contact = contact;
+
     }
 
     // Getters and setters
@@ -66,6 +70,18 @@ public class User {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    // Getter for userLikes
+    public UserPoints getUserLikes() {
+        return userLikes;
+    }
+
+    // Initialize UserLikes manually
+    public void initializeUserLikes(MongoDatabase database) {
+        if (userLikes == null) {
+            userLikes = new UserPoints(database);
+        }
     }
 
     // Save User to the MongoDB 'users' collection

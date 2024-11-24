@@ -38,6 +38,23 @@ public class Application {
         }
     }
 
+    @FXML
+    public void openRecommendation() {
+        try {
+            // Load the ReadArticle.fxml file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/Recommendation.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage and set the new scene
+            Stage stage = (Stage) readbutton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Recommended Articles");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // This method is bound to a logout button or some logout action
     @FXML
     public void logoutAction() {
