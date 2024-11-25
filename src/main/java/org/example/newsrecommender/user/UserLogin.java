@@ -67,6 +67,8 @@ public class UserLogin extends LoginHandler {
         if (verifyCredentials(password)) {
             User user = getUserByUsername(username);
             if (user != null) {
+
+
                 Session.setCurrentUser(user, database);  // Pass database to ensure UserLikes is initialized
                 userLogs.recordLogin(user.getUserId(), user.getUsername()); // Using getters from the User class
                 navigateToApplication();

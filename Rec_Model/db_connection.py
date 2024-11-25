@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from pymongo.errors import ConnectionError
+from pymongo.errors import ConfigurationError
 
 # Connect to MongoDB (adjust your connection URI)
 try:
@@ -8,9 +8,9 @@ try:
     client.admin.command('ping')  # This sends a ping to confirm the connection
     print("Successfully connected to MongoDB!")
 
-    db = client.recommendation_system  # Replace with your database name
+    db = client.News_recommender  # Replace with your database name
 
-except ConnectionError as e:
+except ConfigurationError as e:
     print(f"Failed to connect to MongoDB: {e}")
     exit()
 
@@ -38,6 +38,6 @@ def fetch_user_interactions(user_id):
 # Example usage
 if __name__ == "__main__":
     articles = fetch_articles("COMEDY")  # Fetch articles for a specific category
-    user_interactions = fetch_user_interactions("user123")  # Fetch interactions for a user
+    user_interactions = fetch_user_interactions("admin")  # Fetch interactions for a user
     print("Fetched articles:", articles)
     print("Fetched user interactions:", user_interactions)
