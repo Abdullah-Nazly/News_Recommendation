@@ -1,5 +1,7 @@
 package org.example.newsrecommender.articles;
 
+import org.bson.Document;
+
 public class Article {
     private String link;
     private String headline;
@@ -67,4 +69,16 @@ public class Article {
                 ", date='" + date + '\'' +
                 '}';
     }
+
+     // Static method to create an Article object from a MongoDB Document
+    public static Article fromDocument(Document document) {
+        return new Article(
+                document.getString("link"),
+                document.getString("headline"),
+                document.getString("category"),
+                document.getString("author"),
+                document.getString("date")
+        );
+    }
+
 }

@@ -17,15 +17,21 @@ public class ArticleLoader implements ContentLoader {
     }
 
     @Override
-    public List<Document> loadArticles(String category) {
+    public List<Article> loadArticles(String category) {
         MongoCollection<Document> collection = database.getCollection("articles");
-        return collection.find(new Document("category", category)).into(new ArrayList<>());
+        List<Document> documents = collection.find(new Document("category", category)).into(new ArrayList<>());
+
+        List<Article> articles = new ArrayList<>();
+        for (Document document : documents) {
+            articles.add(Article.fromDocument(document));
+        }
+        return articles;
     }
 
-    @Override
+     @Override
     public String loadArticleContentFromUrl(String url) {
         try {
-            org.jsoup.nodes.Document doc = Jsoup.connect(url).get();
+            org.jsoup.nodes.Document doc = org.jsoup.Jsoup.connect(url).get();
             StringBuilder content = new StringBuilder();
             doc.select("p").forEach(paragraph -> content.append(paragraph.text()).append("\n"));
             return content.toString();

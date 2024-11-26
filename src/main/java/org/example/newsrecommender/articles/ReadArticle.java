@@ -39,7 +39,7 @@ public class ReadArticle {
 
     private ContentLoader articleLoader;
     private ObservableList<String> categories;
-    private List<Document> articles;
+    private List<Article> articles;
     private int currentArticleIndex = 0;
     private MongoDatabase database;
     private UserPoints userPoints;
@@ -75,12 +75,12 @@ public class ReadArticle {
     }
 
     private void loadHeadlinesByCategory(String selectedCategory) {
-        articles = articleLoader.loadArticles(selectedCategory);
+        articles = articleLoader.loadArticles(selectedCategory);  // articles is now a List<Article>
         headlinesVBox.getChildren().clear();
 
         for (int i = 0; i < articles.size(); i++) {
-            Document article = articles.get(i);
-            String headline = article.getString("headline");
+            Article article = articles.get(i);
+            String headline = article.getHeadline();  // Use getHeadline method
 
             Label headlineLabel = new Label((i + 1) + ". " + headline);
             headlineLabel.setStyle("-fx-font-size: 10px; -fx-padding: 6px;");
@@ -92,17 +92,16 @@ public class ReadArticle {
         }
     }
 
-    private void loadArticleContent(Document article) {
-        String articleLink = article.getString("link");
-        String content = articleLoader.loadArticleContentFromUrl(articleLink);
-        articleTextArea.setText(content);
-    }
+    private void loadArticleContent(Article article) {
+    String content = articleLoader.loadArticleContentFromUrl(article.getLink());  // Use Article's link
+    articleTextArea.setText(content);
+}
 
     @FXML
     public void handleLikeButton(ActionEvent event) {
         if (articles != null && !articles.isEmpty()) {
-            Document currentArticle = articles.get(0);
-            String articleCategory = currentArticle.getString("category");
+            Article currentArticle = articles.get(0);
+            String articleCategory = currentArticle.getCategory();
 
             User currentUser = Session.getCurrentUser();
             if (currentUser != null) {
@@ -119,8 +118,8 @@ public class ReadArticle {
     @FXML
     public void handleDislikeButton(ActionEvent event) {
         if (articles != null && !articles.isEmpty()) {
-            Document currentArticle = articles.get(0);
-            String articleCategory = currentArticle.getString("category");
+            Article currentArticle = articles.get(0);
+            String articleCategory = currentArticle.getCategory();
 
             User currentUser = Session.getCurrentUser();
             if (currentUser != null) {
@@ -137,8 +136,8 @@ public class ReadArticle {
     @FXML
     public void handleSaveButton(ActionEvent event) {
         if (articles != null && !articles.isEmpty()) {
-            Document currentArticle = articles.get(0);
-            String articleCategory = currentArticle.getString("category");
+            Article currentArticle = articles.get(0);
+            String articleCategory = currentArticle.getCategory();
 
             User currentUser = Session.getCurrentUser();
             if (currentUser != null) {
