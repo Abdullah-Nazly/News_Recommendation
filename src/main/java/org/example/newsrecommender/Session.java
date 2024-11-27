@@ -10,7 +10,7 @@ public class Session {
     // Set the current user, ensure that UserLikes is initialized in User
     public static void setCurrentUser(User user, MongoDatabase database) {
         currentUser = user;
-        currentUser.initializeUserLikes(database);  // Ensure UserLikes is initialized
+        currentUser.initializeUserPoints(database);  // Ensure UserPoints is initialized
     }
 
     public static User getCurrentUser() {

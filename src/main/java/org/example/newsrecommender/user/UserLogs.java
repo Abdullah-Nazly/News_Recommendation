@@ -30,13 +30,4 @@ public class UserLogs {
         System.out.println("Login recorded for user: " + userName + " (ID: " + userId + ")");
     }
 
-    // Method to fetch the most recent login entry for a user
-    public Document getLastLoginForUser(ObjectId userId) {
-        MongoCollection<Document> loginsCollection = database.getCollection("user_logins");
-
-        // Find the most recent login for the specified user_id
-        return loginsCollection.find(new Document("user_id", userId))
-                .sort(new Document("login_time", -1)) // Sort by login time descending
-                .first();
-    }
 }

@@ -37,12 +37,12 @@ public class SysLogin extends LoginHandler {
     protected boolean verifyCredentials(String password) {
         return defaultPassword.equals(password);
     }
-
     private void navigateToAdminPanel() {
-    // Get the current stage from any node in the scene (e.g., password_field)
-    Stage currentStage = (Stage) password_field.getScene().getWindow();
-    navigateToView(currentStage, "/org/example/newsrecommender/systemAdmin.fxml", "System Admin Panel");
-}
+        // Get the current stage from any node in the scene (e.g., password_field)
+        Stage currentStage = (Stage) password_field.getScene().getWindow();
+        navigateToView(currentStage, "/org/example/newsrecommender/systemAdmin.fxml", "System Admin Panel");
+    }
+
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

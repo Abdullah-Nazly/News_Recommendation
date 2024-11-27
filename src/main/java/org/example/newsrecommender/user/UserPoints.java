@@ -7,7 +7,9 @@ import org.bson.types.ObjectId;
 import org.example.newsrecommender.Session;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserPoints {
 
@@ -152,5 +154,28 @@ public class UserPoints {
                     .append("category_points", new Document(category, pointsToAdd));
             userLikesCollection.insertOne(newUserDoc);
         }
+    }
+
+    public UserPreferences getUserPreferences(ObjectId userId) {
+        MongoCollection<Document> userLikesCollection = database.getCollection("user_likes");
+        Document userDoc = userLikesCollection.find(new Document("user_id", userId)).first();
+
+        if (userDoc != null) {
+            // Convert the "category_points" field to a Map<String, Integer>
+            Document categoryPointsDoc = userDoc.get("category_points", Document.class);
+            Map<String, Integer> categoryPoints = new HashMap<>();
+
+            if (categoryPointsDoc != null) {
+                for (String key : categoryPointsDoc.keySet()) {
+                    categoryPoints.put(key, categoryPointsDoc.getInteger(key, 0));
+                }
+            }
+            List<String> likedCategories = userDoc.getList("liked_categories", String.class);
+            List<String> dislikedCategories = userDoc.getList("disliked_categories", String.class);
+            List<String> savedCategories = userDoc.getList("saved_categories", String.class);
+
+            return new UserPreferences(categoryPoints, likedCategories, dislikedCategories, savedCategories);
+        }
+        return new UserPreferences(); // Return empty preferences if userDoc is not found
     }
 }

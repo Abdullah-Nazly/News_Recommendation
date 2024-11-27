@@ -14,8 +14,14 @@ public class User {
     private String password;
     private String email;
     private String contact;
-    private UserPoints userLikes;
+    private UserPoints userPoints;
 
+    // Initialize UserPoints for managing categories and points
+    public void initializeUserPoints(MongoDatabase database) {
+        if (this.userPoints == null) {
+            this.userPoints = new UserPoints(database);
+        }
+    }
 
     // Constructor
     public User(String username, String password, String email, String contact) {
@@ -74,15 +80,11 @@ public class User {
 
     // Getter for userLikes
     public UserPoints getUserLikes() {
-        return userLikes;
+        return userPoints;
     }
 
     // Initialize UserLikes manually
-    public void initializeUserLikes(MongoDatabase database) {
-        if (userLikes == null) {
-            userLikes = new UserPoints(database);
-        }
-    }
+
 
     // Save User to the MongoDB 'users' collection
     public void saveToDatabase() {
@@ -97,6 +99,13 @@ public class User {
                 .append("contact", this.contact);
 
         usersCollection.insertOne(document); // Insert the user document into the collection
+    }
+    // Convenience method to get all user preferences as a data structure for the recommendation model
+    public UserPreferences getUserPreferences() {
+        if (this.userPoints != null) {
+            return this.userPoints.getUserPreferences(userId);
+        }
+        return new UserPreferences(); // return empty preferences if UserPoints is not initialized
     }
 
 

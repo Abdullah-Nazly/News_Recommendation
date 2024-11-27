@@ -70,7 +70,7 @@ public class Article {
                 '}';
     }
 
-     // Static method to create an Article object from a MongoDB Document
+    // Static method to create an Article object from a MongoDB Document
     public static Article fromDocument(Document document) {
         return new Article(
                 document.getString("link"),

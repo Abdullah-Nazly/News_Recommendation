@@ -15,6 +15,9 @@ public class SystemAdmin {
 
     private MongoDatabase database;
 
+    // No-argument constructor required by JavaFX
+    public SystemAdmin() {
+    }
     public SystemAdmin(MongoDatabase database) {
         this.database = database;
     }

@@ -3,29 +3,33 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.decomposition import TruncatedSVD
 from db_connection import fetch_articles  # Import the function from db_connection
+import json
+
 import pandas as pd
 import os
 
 app = Flask(__name__)
 
-filepath = "cleaned_news_data.csv"
+# Open and load JSON data line by line
+with open('News_Category_Dataset_v3.json', 'r') as f:
+    json_data = f.read()
+json_data2 = [json.loads(line) for line in json_data.split('\n') if line]
 
-# Step 1: Load the cleaned CSV dataset for training the recommendation model
-df_cleaned = pd.read_csv(filepath)  # Path to your cleaned CSV file
-df_cleaned = df_cleaned.dropna(axis=1)  # axis=1 means we are dropping columns, not rows
+# Convert to DataFrame
+data = pd.DataFrame.from_records(json_data2)
 
-print("Columns in df_cleaned:", df_cleaned.columns)
+print("Columns in df_cleaned:", data.columns)
 
 # Check if the necessary columns are present
-if 'headline' not in df_cleaned.columns or 'category' not in df_cleaned.columns:
+if 'headline' not in data.columns or 'category' not in data.columns:
     raise Exception("The CSV data is missing required columns.")
 
 # Combine text fields to create a content field for vectorization
-df_cleaned['content'] = df_cleaned['headline'] + " " + df_cleaned['short_description']
+sata['content'] = data['headline'] + " " + data['short_description']
 
 # Step 2: Initialize TF-IDF Vectorizer and calculate the cosine similarity matrix
 tfidf_vectorizer = TfidfVectorizer(stop_words='english')
-tfidf_matrix = tfidf_vectorizer.fit_transform(df_cleaned['content'])
+tfidf_matrix = tfidf_vectorizer.fit_transform(data['content'])
 
 # Apply dimensionality reduction (optional for large datasets)
 svd = TruncatedSVD(n_components=100)  # Adjust the number of components as needed
@@ -51,9 +55,9 @@ def get_recommendations(article_index, top_n=5):
     recommended_articles = []
     for idx, score in sim_scores:
         recommended_articles.append({
-            'headline': df_cleaned['headline'].iloc[idx],
-            'link': df_cleaned['link'].iloc[idx],  # Assuming 'link' exists in the CSV
-            'category': df_cleaned['category'].iloc[idx],
+            'headline':data['headline'].iloc[idx],
+            'link': data['link'].iloc[idx],  # Assuming 'link' exists in the CSV
+            'category': data['category'].iloc[idx],
             'score': score
         })
     return recommended_articles

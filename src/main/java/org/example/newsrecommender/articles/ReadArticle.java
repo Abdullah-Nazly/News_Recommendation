@@ -157,7 +157,6 @@ public class ReadArticle {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
     @FXML
     private void handleBackButton() {
         try {
