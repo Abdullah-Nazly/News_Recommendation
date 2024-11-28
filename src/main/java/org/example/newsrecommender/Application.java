@@ -18,6 +18,8 @@ public class Application {
     @FXML
     private Button readbutton;
     @FXML
+    private Button openRecommendation;
+    @FXML
     private Label label_welcome;
 
     // This method can be used to handle actions like reading articles
@@ -44,9 +46,8 @@ public class Application {
             // Load the ReadArticle.fxml file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/Recommendation.fxml"));
             Parent root = loader.load();
-
             // Get the current stage and set the new scene
-            Stage stage = (Stage) readbutton.getScene().getWindow();
+            Stage stage = (Stage) openRecommendation.getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Recommended Articles");
             stage.show();

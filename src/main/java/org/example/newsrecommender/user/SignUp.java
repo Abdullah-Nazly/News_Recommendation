@@ -1,5 +1,6 @@
 package org.example.newsrecommender.user;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +18,7 @@ import java.io.IOException;
 public class SignUp {
 
     @FXML
-    private Button button_signup;
+    private Button button_cancel;
     @FXML
     private Button button_login;
     @FXML
@@ -28,6 +29,7 @@ public class SignUp {
     private TextField tf_email;
     @FXML
     private TextField tf_contact;
+
 
     @FXML
     public void openLogin() {
@@ -85,11 +87,32 @@ public class SignUp {
         tf_contact.clear();
     }
 
-    @FXML
+      @FXML
     private void cancelAction() {
-        // Exit the application
-        System.exit(0);
+        try {
+            // Load the boot.fxml file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/boot.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage and set the new scene
+            Stage stage = (Stage) button_cancel.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Boot");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Unable to load the boot screen.");
+        }
     }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
      // Helper method to show alerts
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);

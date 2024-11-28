@@ -5,18 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ece1d37b-2eca-476a-96e4-066c98152930" name="Changes" comment="First commit">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/UserPreferences.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/recommendation/Recommendation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/recommendation/RecommendationSystem.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Rec_Model/Recommendation_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rec_Model/Recommendation_model.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/Login.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/Login.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/Signup.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/Signup.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/api.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/api.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/coding.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/coding.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/deep-learning.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/deep-learning.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/demographic.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/demographic.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/heart.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/heart.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/segment.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/segment.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/table.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/images/table.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/SysLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/SysLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/SystemAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/SystemAdmin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Session.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Session.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/articles/Article.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/articles/Article.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Recommendation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/articles/ArticleLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/articles/ArticleLoader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/articles/ReadArticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/articles/ReadArticle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/UserLogs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/UserLogs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/UserPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/UserPoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/SignUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/SignUp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/UserLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/UserLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Recommendation.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Recommendation.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/SignUp.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/SignUp.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/UserLogin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/UserLogin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/boot.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/boot.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +85,7 @@
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21 (2)&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_directory_selection&quot;: &quot;A:/Year 2 Semester 1/CourseWorks/OOP/NewsRecommender/src/main/java/org/example/newsrecommender&quot;,
-    &quot;last_opened_file_path&quot;: &quot;A:/Year 2 Semester 1/CourseWorks/OOP/NewsRecommender/lib/mysql-connector-j-9.1.0.jar&quot;,
+    &quot;last_opened_file_path&quot;: &quot;A:/Year 2 Semester 1/CM 2601 [PRO]&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -90,6 +103,11 @@
     ]
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="A:\Year 2 Semester 1\CourseWorks\OOP\NewsRecommender\src\main\resources" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="org.example.newsrecommender.Main" />
@@ -161,7 +179,16 @@
       <workItem from="1732539825710" duration="3481000" />
       <workItem from="1732576738693" duration="2114000" />
       <workItem from="1732579008870" duration="10116000" />
-      <workItem from="1732663780407" duration="1947000" />
+      <workItem from="1732663780407" duration="2816000" />
+      <workItem from="1732683546073" duration="1487000" />
+      <workItem from="1732685247921" duration="674000" />
+      <workItem from="1732686741618" duration="100000" />
+      <workItem from="1732700657212" duration="767000" />
+      <workItem from="1732701658312" duration="1709000" />
+      <workItem from="1732716777908" duration="6172000" />
+      <workItem from="1732786559077" duration="1319000" />
+      <workItem from="1732787909009" duration="938000" />
+      <workItem from="1732789019036" duration="11625000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />
@@ -184,6 +211,17 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

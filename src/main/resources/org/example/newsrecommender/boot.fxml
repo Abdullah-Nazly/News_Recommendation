@@ -5,15 +5,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.Boot">
+<AnchorPane prefHeight="400.0" prefWidth="430.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.Boot">
    <children>
-      <Text layoutX="210.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome" textAlignment="CENTER" wrappingWidth="160.2427978515625">
+      <Text fill="CADETBLUE" layoutX="97.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NEWS RECOMMENDER" textAlignment="CENTER" wrappingWidth="241.33333333333326">
          <font>
-            <Font name="System Bold" size="35.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <Button fx:id="user_button" layoutX="84.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleUserLogin" prefHeight="69.0" prefWidth="118.0" text="Login as User" />
-      <Button fx:id="admin_button" layoutX="378.0" layoutY="187.0" mnemonicParsing="false" onAction="#handleAdminLogin" prefHeight="69.0" prefWidth="118.0" text="Login as System&#10; administrator" textAlignment="CENTER" />
+      <Button fx:id="user_button" layoutX="96.0" layoutY="198.0" mnemonicParsing="false" onAction="#handleUserLogin" prefHeight="49.0" prefWidth="241.0" style="-fx-background-color: #5F9EA0;" text="LOGIN AS USER" />
+      <Button fx:id="admin_button" layoutX="96.0" layoutY="269.0" mnemonicParsing="false" onAction="#handleAdminLogin" prefHeight="49.0" prefWidth="241.0" style="-fx-background-color: #5F9EA0;" text="LOGIN AS SYSYTEM ADMINISTRATOR" textAlignment="CENTER" />
+      <Text layoutX="156.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME" wrappingWidth="129.2357177734375">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

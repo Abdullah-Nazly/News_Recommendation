@@ -8,6 +8,8 @@ module org.example.newsrecommender {
     requires org.mongodb.driver.sync.client;
     requires org.mongodb.driver.core;
     requires org.mongodb.bson;
+    requires org.apache.httpcomponents.httpclient;
+    requires org.apache.httpcomponents.httpcore;
 
     opens org.example.newsrecommender to javafx.fxml;
     exports org.example.newsrecommender;
@@ -19,4 +21,6 @@ module org.example.newsrecommender {
     opens org.example.newsrecommender.Admin to javafx.fxml;
     exports org.example.newsrecommender.articles;
     opens org.example.newsrecommender.articles to javafx.fxml;
+    exports org.example.newsrecommender.recommendation;
+    opens org.example.newsrecommender.recommendation to javafx.fxml;
 }

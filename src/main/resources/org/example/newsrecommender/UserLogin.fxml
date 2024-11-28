@@ -7,29 +7,61 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.user.UserLogin">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #5F9EA0;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.user.UserLogin">
    <children>
       <AnchorPane prefHeight="400.0" prefWidth="258.0">
          <children>
-            <ImageView fitHeight="400.0" fitWidth="267.0" layoutX="-1.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../images/Login.jpg" />
-               </image>
-            </ImageView>
+            <AnchorPane prefHeight="400.0" prefWidth="299.0" style="-fx-background-color: white;">
+               <children>
+                  <TextField fx:id="tf_username" layoutX="96.0" layoutY="149.0" prefHeight="35.0" prefWidth="182.0" promptText="Username" />
+                  <Text layoutX="23.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USERNAME" />
+                  <Text layoutX="23.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PASSWORD" wrappingWidth="68.39190673828125" />
+                  <Button fx:id="loginbutton" layoutX="44.0" layoutY="270.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="35.0" prefWidth="222.0" style="-fx-background-color: #5F9EA0;" text="LOGIN">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Text layoutX="53.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dont have an Account ?">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="signinbutton" layoutX="198.0" layoutY="320.0" mnemonicParsing="false" onAction="#openSignUp" style="-fx-background-color: transaparent;" text="SignUp" textFill="CADETBLUE" underline="true">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="button_cancel" layoutX="244.0" layoutY="52.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="35.0" prefWidth="20.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="17.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/cancel%20cross2.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <PasswordField fx:id="tf_password" layoutX="95.0" layoutY="206.0" prefHeight="35.0" prefWidth="182.0" promptText="Password" />
+                  <Text fill="CADETBLUE" layoutX="32.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LETS BEGIN !" wrappingWidth="110.35284423828125">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Text>
+                  <Line endX="150.0" endY="-7.62939453125E-6" layoutX="129.0" layoutY="91.0" startX="-100.0" />
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane prefHeight="400.0" prefWidth="339.0">
+      <AnchorPane prefHeight="400.0" prefWidth="323.0">
          <children>
-            <TextField fx:id="tf_username" layoutX="127.0" layoutY="109.0" />
-            <Text layoutX="41.0" layoutY="127.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name" />
-            <Text layoutX="45.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-            <Button fx:id="loginbutton" layoutX="101.0" layoutY="248.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="25.0" prefWidth="126.0" text="Login" />
-            <Text layoutX="59.0" layoutY="357.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dont have an Account ?" />
-            <Button fx:id="signinbutton" layoutX="202.0" layoutY="340.0" mnemonicParsing="false" onAction="#openSignUp" text="Sign up" />
-            <Button layoutX="102.0" layoutY="290.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="126.0" text="cancel" />
-            <PasswordField fx:id="tf_password" layoutX="127.0" layoutY="160.0" />
+            <Text fill="#f6f0f0" layoutX="45.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BIENVENIDO DE NUEVO !" textAlignment="CENTER" wrappingWidth="211.7896728515625">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </children>

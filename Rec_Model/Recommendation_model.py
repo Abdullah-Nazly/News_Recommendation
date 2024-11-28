@@ -25,7 +25,7 @@ if 'headline' not in data.columns or 'category' not in data.columns:
     raise Exception("The CSV data is missing required columns.")
 
 # Combine text fields to create a content field for vectorization
-sata['content'] = data['headline'] + " " + data['short_description']
+data['content'] = data['headline'] + " " + data['short_description']
 
 # Step 2: Initialize TF-IDF Vectorizer and calculate the cosine similarity matrix
 tfidf_vectorizer = TfidfVectorizer(stop_words='english')

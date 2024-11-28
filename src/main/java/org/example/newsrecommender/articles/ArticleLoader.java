@@ -28,7 +28,7 @@ public class ArticleLoader implements ContentLoader {
         return articles;
     }
 
-     @Override
+    @Override
     public String loadArticleContentFromUrl(String url) {
         try {
             org.jsoup.nodes.Document doc = org.jsoup.Jsoup.connect(url).get();

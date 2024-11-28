@@ -5,14 +5,13 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.Recommendation">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.recommendation.Recommendation">
    <children>
-      <TextArea layoutX="287.0" layoutY="16.0" prefHeight="366.0" prefWidth="296.0" />
-      <TableView layoutX="23.0" layoutY="16.0" prefHeight="143.0" prefWidth="220.0">
+      <TextArea fx:id="content_area" layoutX="287.0" layoutY="16.0" prefHeight="366.0" prefWidth="296.0" />
+      <TableView fx:id="article_table" layoutX="23.0" layoutY="16.0" prefHeight="143.0" prefWidth="220.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn prefWidth="75.0" text="Category" />
+          <TableColumn prefWidth="143.33334350585938" text="Headline" />
         </columns>
       </TableView>
    </children>

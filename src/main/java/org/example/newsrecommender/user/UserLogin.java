@@ -83,9 +83,22 @@ public class UserLogin extends LoginHandler {
 
     @FXML
     private void cancelAction() {
-        // Exit the application
-        System.exit(0);
+        try {
+            // Load the boot.fxml file
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/boot.fxml"));
+            Parent root = loader.load();
+
+            // Get the current stage and set the new scene
+            Stage stage = (Stage) button_cancel.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Boot");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Unable to load the boot screen.");
+        }
     }
+
 
     // Helper method to show alerts
     private void showAlert(String title, String message) {

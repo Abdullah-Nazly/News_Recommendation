@@ -93,9 +93,9 @@ public class ReadArticle {
     }
 
     private void loadArticleContent(Article article) {
-    String content = articleLoader.loadArticleContentFromUrl(article.getLink());  // Use Article's link
-    articleTextArea.setText(content);
-}
+        String content = articleLoader.loadArticleContentFromUrl(article.getLink());  // Use Article's link
+        articleTextArea.setText(content);
+    }
 
     @FXML
     public void handleLikeButton(ActionEvent event) {
