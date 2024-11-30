@@ -151,56 +151,38 @@ public class UserPoints {
     }
 
 
-    public void addClickPoints(ObjectId userId, String articleId) {
-        MongoCollection<Document> userLikesCollection = database.getCollection("user_likes");
-        Document userDoc = userLikesCollection.find(new Document("user_id", userId)).first();
-
-        if (userDoc != null) {
-            Document articlePoints = userDoc.get("article_points", Document.class);
-            if (articlePoints == null) articlePoints = new Document();
-
-            if (!articlePoints.containsKey(articleId)) {
-                articlePoints.put(String.valueOf(articleId), 1);  // Assign click points for this article
-                userLikesCollection.updateOne(
-                        new Document("user_id", userId),
-                        new Document("$set", new Document("article_points", articlePoints))
-                );
-            }
-        } else {
-            Document newUserDoc = new Document("user_id", userId)
-                    .append("article_points", new Document());
-            userLikesCollection.insertOne(newUserDoc);
-        }
-    }
-
-
     public void updateCategoryPoints(ObjectId userId, String category, int pointsToAdd) {
         MongoCollection<Document> userLikesCollection = database.getCollection("user_likes");
         Document userDoc = userLikesCollection.find(new Document("user_id", userId)).first();
 
         if (userDoc != null) {
+            // Get existing category points or create a new document if null
             Document categoryPoints = userDoc.get("category_points", Document.class);
             if (categoryPoints == null) {
                 categoryPoints = new Document();
             }
 
+            // Update the points for the given category
             int currentPoints = categoryPoints.getInteger(category, 0);
             categoryPoints.put(category, currentPoints + pointsToAdd);
 
-            // Update the document with the username right after the user_id field
+            // Create a new ordered document to enforce field order
+            Document updatedDocument = new Document("user_id", userId)
+                    .append("user_name", Session.getCurrentUser().getUsername()) // Ensure order
+                    .append("category_points", categoryPoints);
+
+            // Update the existing document
             userLikesCollection.updateOne(
                     new Document("user_id", userId),
-                    new Document("$set", new Document("user_id", userId)
-                            .append("user_name", Session.getCurrentUser().getUsername()) // Make sure user_name comes right after user_id
-                            .append("category_points", categoryPoints))
+                    new Document("$set", updatedDocument)
             );
 
             UserPreferences preferences = getUserPreferences(userId);
             preferences.printCategoryPoints(Session.getCurrentUser().getUsername());
         } else {
-            // Insert a new document with the user_name immediately after user_id
+            // Insert a new document with user_name immediately after user_id
             Document newUserDoc = new Document("user_id", userId)
-                    .append("user_name", Session.getCurrentUser().getUsername())  // user_name immediately after user_id
+                    .append("user_name", Session.getCurrentUser().getUsername()) // Ensure order
                     .append("category_points", new Document(category, pointsToAdd));
 
             userLikesCollection.insertOne(newUserDoc);
@@ -209,6 +191,7 @@ public class UserPoints {
             preferences.printCategoryPoints(Session.getCurrentUser().getUsername());
         }
     }
+
 
 
 
