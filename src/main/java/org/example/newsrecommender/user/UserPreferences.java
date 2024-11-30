@@ -37,4 +37,16 @@ public class UserPreferences {
     public List<String> getSavedCategories() {
         return savedCategories;
     }
+
+    // New method to print category points
+    public void printCategoryPoints(String username) {
+        System.out.println("Category points for user: " + username);
+        if (categoryPoints == null || categoryPoints.isEmpty()) {
+            System.out.println("No categories or points found.");
+        } else {
+            categoryPoints.forEach((category, points) ->
+                System.out.println("Category: " + category + ", Points: " + points)
+            );
+        }
+    }
 }

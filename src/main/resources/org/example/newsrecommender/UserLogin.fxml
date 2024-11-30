@@ -20,7 +20,7 @@
                   <TextField fx:id="tf_username" layoutX="96.0" layoutY="149.0" prefHeight="35.0" prefWidth="182.0" promptText="Username" />
                   <Text layoutX="23.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USERNAME" />
                   <Text layoutX="23.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PASSWORD" wrappingWidth="68.39190673828125" />
-                  <Button fx:id="loginbutton" layoutX="44.0" layoutY="270.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="35.0" prefWidth="222.0" style="-fx-background-color: #5F9EA0;" text="LOGIN">
+                  <Button fx:id="loginbutton" layoutX="44.0" layoutY="270.0" mnemonicParsing="false" onAction="#loginAction" prefHeight="35.0" prefWidth="222.0" style="-fx-background-color: #5F9EA0; -fx-cursor: hand;" text="LOGIN" textFill="#f8f7f7">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -30,7 +30,7 @@
                         <Font size="14.0" />
                      </font>
                   </Text>
-                  <Button fx:id="signinbutton" layoutX="198.0" layoutY="320.0" mnemonicParsing="false" onAction="#openSignUp" style="-fx-background-color: transaparent;" text="SignUp" textFill="CADETBLUE" underline="true">
+                  <Button fx:id="signinbutton" layoutX="198.0" layoutY="320.0" mnemonicParsing="false" onAction="#openSignUp" style="-fx-background-color: transaparent; -fx-cursor: hand;" text="SignUp" textFill="CADETBLUE" underline="true">
                      <font>
                         <Font size="14.0" />
                      </font>

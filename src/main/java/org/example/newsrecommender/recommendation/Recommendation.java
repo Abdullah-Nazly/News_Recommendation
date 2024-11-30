@@ -6,26 +6,34 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.bson.types.ObjectId;
 import org.example.newsrecommender.articles.Article;
-import org.example.newsrecommender.user.UserPoints;
+import org.example.newsrecommender.user.UserPreferences;
 
 import java.util.List;
+import java.util.Map;
 
 public class Recommendation {
+
     public TableView<Article> article_table;
     public TextArea content_area;
-    private final RecommendationSystem recommendationSystem;
-    private final ObjectId userId; // Assuming you have a userId to fetch recommendations
 
-    public Recommendation(UserPoints userPoints, ObjectId userId) {
-        this.recommendationSystem = new RecommendationSystem(userPoints);
-        this.userId = userId;
+    private final CategoryRecommendationSystem recommendationSystem;
+
+    public Recommendation() {
+        // Mock data for demonstration (replace with actual user data fetching)
+        Map<Integer, UserPreferences> mockPreferences = Map.of(
+                1, new UserPreferences(Map.of("Tech", 10, "Health", 5, "Sports", 2, "Crime", 5), null, null, null),
+                2, new UserPreferences(Map.of("Tech", 8, "Business", 6, "Health", 4, "Parenting", 8), null, null, null),
+                3, new UserPreferences(Map.of("Sports", 9, "Tech", 5, "Business", 7), null, null, null),
+                4, new UserPreferences(Map.of("Sports", 9, "Tech", 5, "Business", 7), null, null, null)
+        );
+
+        this.recommendationSystem = new CategoryRecommendationSystem(mockPreferences);
     }
 
     public void initialize() {
         setupTableColumns();
-        displayRecommendations();
+        printAllUserPreferences(); // Print all user points on initialization
     }
 
     private void setupTableColumns() {
@@ -41,17 +49,16 @@ public class Recommendation {
         article_table.getColumns().addAll(titleColumn, categoryColumn, scoreColumn);
     }
 
-    public void displayRecommendations() {
-        // Get recommended articles for the user
-        List<Article> articles = recommendationSystem.generateRecommendations(userId, 5); // 5 articles for now
+    private void printAllUserPreferences() {
+        // Fetch all user preferences from the recommendation system
+        Map<Integer, UserPreferences> allPreferences = recommendationSystem.getAllUserPreferences();
 
-        // Print articles to console (debugging)
-        for (Article article : articles) {
-            System.out.println("Recommended Article: " + article.getHeadline());
+        System.out.println("Displaying all user preferences and points:");
+        for (Map.Entry<Integer, UserPreferences> entry : allPreferences.entrySet()) {
+            int userId = entry.getKey();
+            UserPreferences preferences = entry.getValue();
+            Map<String, Integer> categoryPoints = preferences.getCategoryPoints();
+            System.out.println("User ID: " + userId + ", Category Points: " + categoryPoints);
         }
-
-        // Convert articles to ObservableList and display in the table
-        ObservableList<Article> observableArticles = FXCollections.observableArrayList(articles);
-        article_table.setItems(observableArticles);
     }
 }

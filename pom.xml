@@ -79,10 +79,15 @@
         <version>4.5.13</version>
     </dependency>
     <dependency>
-    <groupId>org.apache.httpcomponents</groupId>
-    <artifactId>httpcore</artifactId>
-    <version>4.4.13</version>
-</dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpcore</artifactId>
+        <version>4.4.13</version>
+    </dependency>
+    <dependency>
+        <groupId>com.github.haifengl</groupId>
+        <artifactId>smile-core</artifactId>
+        <version>2.6.0</version>
+    </dependency>
   </dependencies>
 
   <build>

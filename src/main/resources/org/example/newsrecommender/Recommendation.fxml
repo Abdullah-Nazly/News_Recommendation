@@ -10,8 +10,9 @@
       <TextArea fx:id="content_area" layoutX="287.0" layoutY="16.0" prefHeight="366.0" prefWidth="296.0" />
       <TableView fx:id="article_table" layoutX="23.0" layoutY="16.0" prefHeight="143.0" prefWidth="220.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Category" />
-          <TableColumn prefWidth="143.33334350585938" text="Headline" />
+          <TableColumn prefWidth="75.0" text="Title" />
+          <TableColumn prefWidth="84.66665649414062" text="Category" />
+            <TableColumn prefWidth="58.66668701171875" text="Score" />
         </columns>
       </TableView>
    </children>

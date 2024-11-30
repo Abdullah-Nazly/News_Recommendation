@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.example.newsrecommender.Session;
 import org.example.newsrecommender.db.DB;
 import org.example.newsrecommender.user.User;
@@ -36,13 +37,17 @@ public class ReadArticle {
     private Button backButton;
     @FXML
     private Button likeButton;
-
+    @FXML
+    private Button dislikeButton;
+    @FXML
+    private Button saveButton;
     private ContentLoader articleLoader;
     private ObservableList<String> categories;
     private List<Article> articles;
-    private int currentArticleIndex = 0;
     private MongoDatabase database;
     private UserPoints userPoints;
+    private Article currentArticle; // Track the currently displayed article
+
 
     public ReadArticle() {
         this.database = DB.getDatabase();
@@ -53,6 +58,9 @@ public class ReadArticle {
     @FXML
     public void initialize() {
         loadCategories();
+        likeButton.setDisable(true); // Initially disabled until article is displayed
+        dislikeButton.setDisable(true); // Initially disabled
+        saveButton.setDisable(true); // Initially disabled
     }
 
     private void loadCategories() {
@@ -93,61 +101,74 @@ public class ReadArticle {
     }
 
     private void loadArticleContent(Article article) {
-        String content = articleLoader.loadArticleContentFromUrl(article.getLink());  // Use Article's link
+        String content = articleLoader.loadArticleContentFromUrl(article.getLink());
         articleTextArea.setText(content);
+        currentArticle = article; // Track the current article being displayed
+
+        // Enable the buttons after the article is displayed
+        likeButton.setDisable(false);
+        dislikeButton.setDisable(false);
+        saveButton.setDisable(false);
     }
 
     @FXML
     public void handleLikeButton(ActionEvent event) {
-        if (articles != null && !articles.isEmpty()) {
-            Article currentArticle = articles.get(0);
-            String articleCategory = currentArticle.getCategory();
-
+        if (currentArticle != null) {
+            ObjectId articleId = currentArticle.getId();
+            String category = currentArticle.getCategory();  // Get the category of the article
             User currentUser = Session.getCurrentUser();
+
             if (currentUser != null) {
-                userPoints.addCategoryLike(currentUser.getUserId(), articleCategory);
-                showAlert("Liked", "You liked the category: " + articleCategory);
+                if (!userPoints.isArticleLiked(currentUser.getUserId(), articleId)) {
+                    userPoints.addArticleLike(currentUser.getUserId(), articleId); // Update article-specific points
+                    userPoints.updateCategoryPoints(currentUser.getUserId(), category, 2);  // Update category points
+                    showAlert("Liked", "You liked the article: " + currentArticle.getHeadline());
+                } else {
+                    showAlert("Error", "You have already liked this article.");
+                }
             } else {
                 showAlert("Error", "User not logged in.");
             }
-        } else {
-            showAlert("Error", "No articles loaded. Please select a category first.");
         }
     }
 
     @FXML
     public void handleDislikeButton(ActionEvent event) {
-        if (articles != null && !articles.isEmpty()) {
-            Article currentArticle = articles.get(0);
-            String articleCategory = currentArticle.getCategory();
-
+        if (currentArticle != null) {
+            ObjectId articleId = currentArticle.getId();
+            String category = currentArticle.getCategory();  // Get the category of the article
             User currentUser = Session.getCurrentUser();
             if (currentUser != null) {
-                userPoints.dislikeCategory(currentUser.getUserId(), articleCategory);
-                showAlert("Disliked", "You disliked the category: " + articleCategory);
+                if (!userPoints.isArticleDisliked(currentUser.getUserId(), articleId)) {
+                    userPoints.dislikeArticle(currentUser.getUserId(), articleId);
+                    userPoints.updateCategoryPoints(currentUser.getUserId(), category, -2);  // Update category points
+                    showAlert("Disliked", "You disliked the article: " + currentArticle.getHeadline());
+                } else {
+                    showAlert("Error", "You have already disliked this article.");
+                }
             } else {
                 showAlert("Error", "User not logged in.");
             }
-        } else {
-            showAlert("Error", "No articles loaded. Please select a category first.");
         }
     }
 
     @FXML
     public void handleSaveButton(ActionEvent event) {
-        if (articles != null && !articles.isEmpty()) {
-            Article currentArticle = articles.get(0);
-            String articleCategory = currentArticle.getCategory();
-
+        if (currentArticle != null) {
+            ObjectId articleId = currentArticle.getId();
+            String category = currentArticle.getCategory();
             User currentUser = Session.getCurrentUser();
             if (currentUser != null) {
-                userPoints.saveCategory(currentUser.getUserId(), articleCategory);
-                showAlert("Saved", "You saved the category: " + articleCategory);
+                if (!userPoints.isArticleSaved(currentUser.getUserId(), articleId)) {
+                    userPoints.saveArticle(currentUser.getUserId(), articleId);
+                    userPoints.updateCategoryPoints(currentUser.getUserId(), category, 1);  // Update category points
+                    showAlert("Saved", "You saved the article: " + currentArticle.getHeadline());
+                } else {
+                    showAlert("Error", "You have already saved this article.");
+                }
             } else {
                 showAlert("Error", "User not logged in.");
             }
-        } else {
-            showAlert("Error", "No articles loaded. Please select a category first.");
         }
     }
 
@@ -167,4 +188,6 @@ public class ReadArticle {
             e.printStackTrace();
         }
     }
+
+
 }
