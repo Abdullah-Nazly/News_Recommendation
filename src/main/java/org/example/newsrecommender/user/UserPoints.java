@@ -253,4 +253,43 @@ public class UserPoints {
         return false;
     }
 
+    public void addClickPoints(ObjectId userId, String selectedCategory) {
+        MongoCollection<Document> userLikesCollection = database.getCollection("user_likes");
+        Document userDoc = userLikesCollection.find(new Document("user_id", userId)).first();
+
+        if (userDoc != null) {
+            // Retrieve or initialize a list of clicked categories
+            List<String> clickedCategories = userDoc.getList("clicked_categories", String.class);
+            if (clickedCategories == null) {
+                clickedCategories = new ArrayList<>();
+            }
+
+            // Check if the category was already clicked
+            if (!clickedCategories.contains(selectedCategory)) {
+                // Add the category to the clicked list and update points
+                clickedCategories.add(selectedCategory);
+                updateCategoryPoints(userId, selectedCategory, 1); // Add one point for the click
+
+                // Update the user's document with the new clicked categories
+                userLikesCollection.updateOne(
+                    new Document("user_id", userId),
+                    new Document("$set", new Document("clicked_categories", clickedCategories))
+                );
+            } else {
+                // Log or handle the case where the category was already clicked
+                System.out.println("Category already clicked, no points added: " + selectedCategory);
+            }
+        } else {
+            // If the user does not exist, create a new document with the clicked category
+            List<String> clickedCategories = new ArrayList<>();
+            clickedCategories.add(selectedCategory);
+
+            Document newUserDoc = new Document("user_id", userId)
+                    .append("clicked_categories", clickedCategories)
+                    .append("category_points", new Document(selectedCategory, 1)); // Initialize with one point
+
+            userLikesCollection.insertOne(newUserDoc);
+        }
+    }
+
 }

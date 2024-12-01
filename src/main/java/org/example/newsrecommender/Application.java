@@ -1,5 +1,6 @@
 package org.example.newsrecommender;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,12 +8,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.bson.types.ObjectId;
 import org.example.newsrecommender.db.DB;
+import org.example.newsrecommender.db.DBservice;
 
 import java.io.IOException;
 
 public class Application {
 
+    public Button btn_profile;
     @FXML
     private Button button_logout;
     @FXML
@@ -78,5 +82,22 @@ public class Application {
     // This method is called when the window is closed to safely close the DB connection
     public void closeApp() {
         DB.close();
+    }
+
+    public void go_profile(ActionEvent event) {
+        try {
+            // Load the login page
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/Profile.fxml"));
+            Parent root = loader.load();
+
+
+            // Get the current stage and set the new scene
+            Stage stage = (Stage) btn_profile.getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.setTitle("profile");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

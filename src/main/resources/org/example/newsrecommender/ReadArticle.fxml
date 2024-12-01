@@ -28,7 +28,7 @@
       </AnchorPane>
       <Button fx:id="backButton" layoutX="19.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: transparent;">
          <graphic>
-            <ImageView fitHeight="25.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                <image>
                   <Image url="@../../../images/left-arrow.png" />
                </image>

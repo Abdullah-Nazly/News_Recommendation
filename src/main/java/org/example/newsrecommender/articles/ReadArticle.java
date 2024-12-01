@@ -77,7 +77,7 @@ public class ReadArticle {
             loadHeadlinesByCategory(selectedCategory);
             User currentUser = Session.getCurrentUser();
             if (currentUser != null) {
-//                userPoints.addClickPoints(currentUser.getUserId(), selectedCategory);
+                userPoints.addClickPoints(currentUser.getUserId(), selectedCategory);
             }
         }
     }

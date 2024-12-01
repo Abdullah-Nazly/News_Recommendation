@@ -4,18 +4,33 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: grey;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.recommendation.Recommendation">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.recommendation.Recommendation">
    <children>
-      <TextArea fx:id="content_area" layoutX="287.0" layoutY="16.0" prefHeight="366.0" prefWidth="296.0" />
-      <TableView fx:id="article_table" layoutX="14.0" layoutY="218.0" prefHeight="143.0" prefWidth="247.0">
+      <TextArea fx:id="content_area" layoutX="266.0" layoutY="61.0" prefHeight="334.0" prefWidth="328.0" />
+      <TableView fx:id="article_table" layoutX="14.0" layoutY="62.0" prefHeight="334.0" prefWidth="247.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Title" />
-          <TableColumn prefWidth="84.66665649414062" text="Category" />
-            <TableColumn prefWidth="58.66668701171875" text="Score" />
+          <TableColumn fx:id="titleColumn" prefWidth="129.99996948242188" text="Title" />
+          <TableColumn fx:id="categoryColumn" prefWidth="115.99998982747397" text="Category" />
         </columns>
       </TableView>
-      <Button fx:id="backButton" layoutX="25.0" layoutY="39.0" mnemonicParsing="false" onAction="#handleBackButton" text="back" />
+      <Button fx:id="backButton" layoutX="18.0" layoutY="15.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="27.0" prefWidth="41.0" style="-fx-background-color: transparetn;">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/left-arrow.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Text fill="CADETBLUE" layoutX="202.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recommended Articles">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

@@ -10,6 +10,8 @@ module org.example.newsrecommender {
     requires org.mongodb.bson;
     requires org.apache.httpcomponents.httpclient;
     requires org.apache.httpcomponents.httpcore;
+    requires org.testng;
+    requires org.junit.jupiter.api;
 
     opens org.example.newsrecommender to javafx.fxml;
     exports org.example.newsrecommender;

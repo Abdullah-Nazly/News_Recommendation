@@ -1,5 +1,6 @@
 package org.example.newsrecommender.recommendation;
 
+import com.mongodb.client.MongoDatabase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,128 +13,81 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import org.bson.types.ObjectId;
-import org.example.newsrecommender.articles.Article;
-import org.example.newsrecommender.db.DBservice;
-import org.example.newsrecommender.user.UserPreferences;
 import org.example.newsrecommender.Session;
+import org.example.newsrecommender.articles.Article;
+import org.example.newsrecommender.articles.ArticleLoader;
+import org.example.newsrecommender.db.DB;
+import org.example.newsrecommender.db.DBservice;
+import org.example.newsrecommender.recommendation.RecommendationManager;
 
 import java.io.IOException;
-import java.util.Map;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-
-import static org.example.newsrecommender.db.DBservice.getUserPreferencesAsync;
 
 public class Recommendation {
 
-    public TableView<Article> article_table;
-    public TextArea content_area;
-    public Button backButton;
+    public TableColumn titleColumn;
+    public TableColumn categoryColumn;
+    @FXML
+    private TableView<Article> article_table;
+    @FXML
+    private TextArea content_area;
+    @FXML
+    private Button backButton;
+    ObservableList<Article> articleList = FXCollections.observableArrayList();
 
-    private UserPreferences userPreferences;
+
+    private RecommendationManager recommendationManager;
+
+    public Recommendation(){
+    }
+
+    public Recommendation(RecommendationManager recommendationManager) {
+        this.recommendationManager = recommendationManager;
+    }
 
     public void initialize() {
-        setupTableColumns();
-        printUserPreferences(); // Print user preferences during initialization
-        recommendCategories(); // Recommend categories based on user preferences
-    }
+        // Get the MongoDatabase instance from your DB class
+        MongoDatabase mongoDatabase = DB.getDatabase();
+        // Instantiate the DBservice with the MongoDatabase instance
+        DBservice dbService = new DBservice(mongoDatabase);
 
-    public Recommendation() {
-        // Default constructor required by JavaFX
-    }
+        // Instantiate the ArticleFetcher with the DBservice
+        ArticleFetcher articleFetcher = new ArticleFetcher(dbService);  // Pass DBservice to ArticleFetcher
 
-    private void setupTableColumns() {
-        TableColumn<Article, String> titleColumn = new TableColumn<>("Title");
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+         // Instantiate UserPreferencesService with the required DBservice parameter
+        UserPreferencesService preferencesService = new UserPreferencesService(dbService);  // Pass dbService
+        recommendationManager = new RecommendationManager(preferencesService, articleFetcher);  // Now instantiate RecommendationManager
 
-        TableColumn<Article, String> categoryColumn = new TableColumn<>("Category");
+        // Bind existing columns to Article properties
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("headline"));
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
-        TableColumn<Article, Double> scoreColumn = new TableColumn<>("Score");
-        scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
-
-        article_table.getColumns().addAll(titleColumn, categoryColumn, scoreColumn);
-    }
-
-    private void printUserPreferences() {
-        try {
-            // Fetch the current user's preferences using ObjectId
-            ObjectId userId = Session.getCurrentUser().getUserId(); // Assumes userId is of type ObjectId
-            String username = Session.getCurrentUser().getUsername(); // Fetch current user's username
-            UserPreferences preferences = getUserPreferencesAsync(userId).get(); // Fetch preferences asynchronously
-
-            // Print the current user's details
-            System.out.println("Current User: " + username + " (ID: " + userId + ")");
-
-            if (preferences != null) {
-                // Print category points using the method in UserPreferences
-                preferences.printCategoryPoints(username);
-            } else {
-                System.out.println("No preferences found for the current user.");
+        article_table.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) { // Double-click detected
+                Article selectedArticle = article_table.getSelectionModel().getSelectedItem();
+                if (selectedArticle != null) {
+                    displayArticleContent(selectedArticle);
+                }
             }
-        } catch (InterruptedException | ExecutionException e) {
-            System.err.println("Error fetching user preferences: " + e.getMessage());
-            e.printStackTrace();
+        });
+
+        // Fetch and recommend articles after initialization
+        recommendationManager.recommendArticles(Session.getCurrentUser().getUserId());
+        article_table.setItems(recommendationManager.getArticleList());
+    }
+    private void displayArticleContent(Article article) {
+        String url = article.getLink();
+        if (url != null && !url.isEmpty()) {
+            content_area.setText(new ArticleLoader(DB.getDatabase()).loadArticleContentFromUrl(url));
+        } else {
+            content_area.setText("No URL available for this article.");
         }
     }
 
-    // Recommend categories based on category points
-    private void recommendCategories() {
-        try {
-            // Fetch the current user's preferences asynchronously
-            ObjectId userId = Session.getCurrentUser().getUserId();
-
-            // Fetch preferences in a non-blocking manner
-            CompletableFuture<UserPreferences> preferencesFuture = getUserPreferencesAsync(userId);
-
-            // Perform other UI-related tasks if necessary here...
-
-            // Get the preferences once they are fetched
-            UserPreferences preferences = preferencesFuture.get(); // Blocking here until data is available
-
-            if (preferences != null) {
-                // Get the category points and sort them by highest points
-                Map<String, Integer> categoryPoints = preferences.getCategoryPoints();
-                List<Map.Entry<String, Integer>> sortedCategories = categoryPoints.entrySet().stream()
-                        .sorted((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()))
-                        .collect(Collectors.toList());
-
-                // Print the recommended categories
-                System.out.println("\nRecommended Categories for " + Session.getCurrentUser().getUsername() + ":");
-                for (Map.Entry<String, Integer> entry : sortedCategories) {
-                    System.out.println("Category: " + entry.getKey() + ", Points: " + entry.getValue());
-                }
-
-                // Optionally, update the UI with recommended categories
-                ObservableList<String> recommendedCategories = FXCollections.observableArrayList();
-                for (Map.Entry<String, Integer> entry : sortedCategories) {
-                    recommendedCategories.add(entry.getKey());
-                }
-
-                // You could add the recommended categories to your UI, such as a list view or a table
-                content_area.setText("Recommended Categories:\n");
-                for (String category : recommendedCategories) {
-                    content_area.appendText(category + "\n");
-                }
-
-            } else {
-                System.out.println("No preferences found for the current user.");
-            }
-        } catch (Exception e) {
-            System.err.println("Error recommending categories: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    
     @FXML
     private void handleBackButton() {
         try {
             Stage stage = (Stage) backButton.getScene().getWindow();
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/newsrecommender/Application.fxml")));
+            Parent root = FXMLLoader.load(getClass().getResource("/org/example/newsrecommender/Application.fxml"));
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             e.printStackTrace();

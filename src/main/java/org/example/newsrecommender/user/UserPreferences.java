@@ -1,5 +1,6 @@
 package org.example.newsrecommender.user;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,13 +12,12 @@ public class UserPreferences {
     private List<String> savedCategories;
 
     public UserPreferences(Map<String, Integer> categoryPoints, List<String> likedCategories,
-                           List<String> dislikedCategories, List<String> savedCategories) {
+                       List<String> dislikedCategories, List<String> savedCategories) {
         this.categoryPoints = categoryPoints;
-        this.likedCategories = likedCategories;
-        this.dislikedCategories = dislikedCategories;
-        this.savedCategories = savedCategories;
+        this.likedCategories = likedCategories != null ? likedCategories : new ArrayList<>();  // Ensure it's never null
+        this.dislikedCategories = dislikedCategories != null ? dislikedCategories : new ArrayList<>();
+        this.savedCategories = savedCategories != null ? savedCategories : new ArrayList<>();
     }
-
     public UserPreferences() {
         // Constructor for empty preferences
     }
@@ -27,8 +27,8 @@ public class UserPreferences {
     }
 
     public List<String> getLikedCategories() {
-        return likedCategories;
-    }
+    return likedCategories == null ? new ArrayList<>() : likedCategories;
+}
 
     public List<String> getDislikedCategories() {
         return dislikedCategories;

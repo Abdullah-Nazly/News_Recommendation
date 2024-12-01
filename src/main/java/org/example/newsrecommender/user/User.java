@@ -100,12 +100,16 @@ public class User {
 
         usersCollection.insertOne(document); // Insert the user document into the collection
     }
-    // Convenience method to get all user preferences as a data structure for the recommendation model
-    public UserPreferences getUserPreferences() {
-        if (this.userPoints != null) {
-            return this.userPoints.getUserPreferences(userId);
-        }
-        return new UserPreferences(); // return empty preferences if UserPoints is not initialized
+    // Method to convert a MongoDB Document to a User object
+    public static User fromDocument(Document document) {
+        ObjectId userId = document.getObjectId("_id"); // Get the MongoDB _id field
+        String username = document.getString("username");
+        String password = document.getString("password");
+        String email = document.getString("email");
+        String contact = document.getString("contact");
+
+        // Return a new User object using the data from the document
+        return new User(userId, username, password, email, contact);
     }
 
 
