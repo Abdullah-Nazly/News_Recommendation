@@ -1,4 +1,4 @@
-package org.example.newsrecommender.articles;
+package org.example.newsrecommender.Admin;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.bson.Document;
+import org.example.newsrecommender.articles.Article;
 import org.example.newsrecommender.db.DB;
 
 import java.io.IOException;
@@ -27,10 +28,16 @@ public class DeleteArticle {
     public Button backButton;
 
     public void initialize() {
-        // Fetch articles from the database and display them in the table
+            // Bind the TableColumns to the Article properties
+        link.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getLink()));
+        headline.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getHeadline()));
+        category.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getCategory()));
+        date.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDate()));
+
+        // Load articles from the database
         loadArticlesFromDatabase();
 
-        // Add event listener for double-click on an article row
+        // Handle row double-click
         articleTable.setOnMouseClicked(this::handleTableRowDoubleClick);
     }
 
@@ -38,26 +45,18 @@ public class DeleteArticle {
         var database = DB.getDatabase();
         var articlesCollection = database.getCollection("articles");
 
-        // Clear current table data
         articleTable.getItems().clear();
 
-        // Get all articles from the database
-        var documents = articlesCollection.find();
-
-        // Convert documents to Article objects and add to the table
-        for (Document document : documents) {
-            Article article = Article.fromDocument(document); // Convert Document to Article
-            articleTable.getItems().add(article);
+        for (Document document : articlesCollection.find()) {
+            articleTable.getItems().add(Article.fromDocument(document));
         }
     }
 
     private void handleTableRowDoubleClick(MouseEvent event) {
-        if (event.getClickCount() == 2) { // Double-click event
+        if (event.getClickCount() == 2) {
             Article selectedArticle = articleTable.getSelectionModel().getSelectedItem();
-
             if (selectedArticle != null) {
-                // Show confirmation alert
-                Alert alert = new Alert(AlertType.CONFIRMATION);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Delete Article");
                 alert.setHeaderText("Are you sure you want to delete this article?");
                 alert.setContentText(selectedArticle.getHeadline());
@@ -72,18 +71,21 @@ public class DeleteArticle {
     }
 
     private void deleteArticle(Article article) {
-        // Get database and articles collection
         var database = DB.getDatabase();
         var articlesCollection = database.getCollection("articles");
-
-        // Delete the article from the database using its ObjectId
         articlesCollection.deleteOne(new Document("_id", article.getId()));
 
-        // Refresh the TableView after deletion
         loadArticlesFromDatabase();
 
-        // Show success alert
-        showAlert(AlertType.INFORMATION, "Article Deleted", "The article has been successfully deleted.");
+        showAlert(Alert.AlertType.INFORMATION, "Article Deleted", "The article has been successfully deleted.");
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
@@ -95,12 +97,5 @@ public class DeleteArticle {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    private void showAlert(AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

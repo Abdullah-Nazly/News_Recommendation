@@ -7,24 +7,24 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="493.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.Application">
    <children>
-      <Text layoutX="148.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME" textAlignment="CENTER" wrappingWidth="197.62310791015625">
+      <Text layoutX="148.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WELCOME" textAlignment="CENTER" wrappingWidth="197.62310791015625">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Text>
-      <Button fx:id="button_logout" layoutX="69.0" layoutY="14.0" mnemonicParsing="false" onAction="#logoutAction" text="Logout">
+      <Button fx:id="button_logout" layoutX="13.0" layoutY="11.0" mnemonicParsing="false" onAction="#logoutAction" text="Logout">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="readbutton" layoutX="97.0" layoutY="183.0" mnemonicParsing="false" onAction="#openArticle" prefHeight="53.0" prefWidth="245.0" style="-fx-background-color: #5F9EA0; -fx-cursor: hand;" text="READ ARTICLE" textFill="#efecec">
+      <Button fx:id="readbutton" layoutX="127.0" layoutY="184.0" mnemonicParsing="false" onAction="#openArticle" prefHeight="53.0" prefWidth="245.0" style="-fx-background-color: #5F9EA0; -fx-cursor: hand;" text="READ ARTICLE" textFill="#efecec">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Button fx:id="openRecommendation" layoutX="97.0" layoutY="264.0" mnemonicParsing="false" onAction="#openRecommendation" prefHeight="53.0" prefWidth="245.0" style="-fx-background-color: #5F9EA0; -fx-cursor: hand;" text="RECOMMENDED ARTICLES" textAlignment="CENTER" textFill="#f8f6f6">
+      <Button fx:id="openRecommendation" layoutX="127.0" layoutY="262.0" mnemonicParsing="false" onAction="#openRecommendation" prefHeight="53.0" prefWidth="245.0" style="-fx-background-color: #5F9EA0; -fx-cursor: hand;" text="RECOMMENDED ARTICLES" textAlignment="CENTER" textFill="#f8f6f6">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Button fx:id="btn_profile" layoutX="379.0" layoutY="59.0" mnemonicParsing="false" onAction="#go_profile" prefHeight="53.0" prefWidth="57.0" text="Profile" />
+      <Button fx:id="btn_profile" layoutX="428.0" layoutY="8.0" mnemonicParsing="false" onAction="#go_profile" prefHeight="47.0" prefWidth="57.0" text="Profile" />
    </children>
 </AnchorPane>

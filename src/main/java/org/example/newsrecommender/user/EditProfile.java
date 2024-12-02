@@ -12,8 +12,6 @@ import javafx.stage.Stage;
 import org.bson.Document;
 import org.example.newsrecommender.Session;
 import org.example.newsrecommender.db.DB;
-import org.example.newsrecommender.user.User;
-
 
 import java.io.IOException;
 import java.util.Objects;

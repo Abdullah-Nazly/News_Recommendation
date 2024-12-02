@@ -42,19 +42,17 @@ public class RecommendationManager {
                 int numArticles = getNumArticles(categoryCount);
 
                 futures.add(executorService.submit(() -> {
-                    List<Article> articles = articleFetcher.fetchArticlesByCategory(category, 10);
+                    List<Article> articles = articleFetcher.fetchArticlesByCategory(category, 7);
                     return rankArticles(articles, preferences);
                 }));
 
-                if (++categoryCount >= 3) break;
+                if (++categoryCount >= 4) break;
             }
 
             for (Future<List<Article>> future : futures) {
                 articleList.addAll(future.get());
             }
 
-            // Log recommendations to the console
-//            printRecommendationsToConsole();
         } catch (Exception e) {
             logger.severe("Error recommending articles: " + e.getMessage());
             e.printStackTrace();
@@ -63,9 +61,10 @@ public class RecommendationManager {
 
     private int getNumArticles(int rank) {
         return switch (rank) {
-            case 0 -> 3;
-            case 1 -> 2;
-            case 2 -> 1;
+            case 0 -> 4;
+            case 1 -> 3;
+            case 2 -> 2;
+            case 3 -> 1;
             default -> 0;
         };
     }

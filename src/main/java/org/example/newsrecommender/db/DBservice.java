@@ -72,7 +72,7 @@ public class DBservice {
     public List<ObjectId> getArticleIds(ObjectId userId, String field) {
         MongoCollection<org.bson.Document> userLikesCollection = database.getCollection("user_likes");
         org.bson.Document user = userLikesCollection.find(new org.bson.Document("user_id", userId)).first();
-
+        System.out.println(userId);
         if (user != null) {
             return user.getList(field, ObjectId.class);
         }
@@ -82,21 +82,21 @@ public class DBservice {
     // Fetch article details by a list of IDs from the articles collection
     public List<Article> getArticlesByIds(List<ObjectId> articleIds) {
         MongoCollection<org.bson.Document> articlesCollection = database.getCollection("articles");
+        System.out.println(articleIds);
         List<Article> articles = new ArrayList<>();
 
-        for (org.bson.Document doc : articlesCollection.find(in("_id", articleIds))) {
-            articles.add(new Article(
-                doc.getObjectId("_id"),
-                doc.getString("link"),
-                doc.getString("headline"),
-                doc.getString("category"),
-                null, // Author field is missing in example data; replace with actual field if available
-                doc.getString("date")
-            ));
+        for (ObjectId articleId : articleIds) {
+            Document articleDoc = articlesCollection.find(new Document("_id", articleId)).first();
+            if (articleDoc != null) {
+                articles.add(Article.fromDocument(articleDoc));
+            }
         }
         return articles;
     }
 
+    public Document getUserDocument(ObjectId userId) {
+        return userLikesCollection.find(new Document("user_id", userId)).first();
+    }
 
 
 

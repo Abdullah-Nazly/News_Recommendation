@@ -21,7 +21,4 @@ public class Session {
         return currentUser != null;
     }
 
-    public static void logout() {
-        currentUser = null;
-    }
 }

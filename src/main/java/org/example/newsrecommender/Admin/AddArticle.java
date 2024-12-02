@@ -1,4 +1,4 @@
-package org.example.newsrecommender.articles;
+package org.example.newsrecommender.Admin;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

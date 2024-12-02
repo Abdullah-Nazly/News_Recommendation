@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="371.0" prefWidth="506.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.articles.AddArticle">
+<AnchorPane prefHeight="371.0" prefWidth="506.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.Admin.AddArticle">
    <children>
       <Text layoutX="112.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LINK" wrappingWidth="47.953125" />
       <Text layoutX="111.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HEADLINE" wrappingWidth="81.96614837646484" />

@@ -1,4 +1,4 @@
-package org.example.newsrecommender.user;
+package org.example.newsrecommender.Admin;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.bson.Document;
 import org.example.newsrecommender.db.DB;
+import org.example.newsrecommender.user.User;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -29,18 +30,10 @@ public class DeleteUser {
         loadUsersFromDatabase();
 
         // Set custom cell factories to display user data without modifying the User class
-        userName.setCellValueFactory(cellData -> {
-            return new javafx.beans.property.SimpleStringProperty(cellData.getValue().getUsername());
-        });
-        password.setCellValueFactory(cellData -> {
-            return new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPassword());
-        });
-        contact.setCellValueFactory(cellData -> {
-            return new javafx.beans.property.SimpleStringProperty(cellData.getValue().getContact());
-        });
-        email.setCellValueFactory(cellData -> {
-            return new javafx.beans.property.SimpleStringProperty(cellData.getValue().getEmail());
-        });
+        userName.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getUsername()));
+        password.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPassword()));
+        contact.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getContact()));
+        email.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getEmail()));
 
         // Add event listener for double-click on a user row
         userTable.setOnMouseClicked(this::handleTableRowDoubleClick);

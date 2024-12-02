@@ -51,22 +51,26 @@ public class Profile {
     @FXML
     public void initialize() {
         if (dbService == null || currentUserId == null) {
-        System.err.println("DBservice or currentUserId is not set. Ensure they are initialized before calling initialize().");
-        return;
+            System.err.println("DBservice or currentUserId is not set. Ensure they are initialized before calling initialize().");
+            return;
+        }
+
+        // Set up table columns
+        setupTableColumns();
+
+        // Load articles
+        loadLikedArticles(currentUserId);
+        loadSavedArticles(currentUserId);
     }
-        // Initialize the columns for liked articles
+
+    private void setupTableColumns() {
         likedTitleColumn.setCellValueFactory(new PropertyValueFactory<>("headline"));
         likedCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         likedDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
-        // Initialize the columns for saved articles
         savedTitleColumn.setCellValueFactory(new PropertyValueFactory<>("headline"));
         savedCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         savedDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-
-        // Load the articles (you can replace this with actual database or API calls)
-        loadLikedArticles(currentUserId);
-        loadSavedArticles(currentUserId);
     }
 
      // Load liked articles from the database
