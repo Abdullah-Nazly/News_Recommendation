@@ -10,13 +10,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.bson.Document;
+import org.example.newsrecommender.BaseController;
 import org.example.newsrecommender.Session;
 import org.example.newsrecommender.db.DB;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class EditProfile {
+public class EditProfile implements BaseController {
     public Button saveButton;
     public Button backButton;
     public TextField userName;
@@ -111,13 +112,10 @@ public class EditProfile {
     }
     @FXML
     private void handleBackButton() {
-        try {
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/newsrecommender/Profile.fxml")));
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Get the current stage (window) from the back button's scene
+        Stage currentStage = (Stage) backButton.getScene().getWindow();
+        // Use navigateToView method to navigate to the Profile screen
+        navigateToView(currentStage, "/org/example/newsrecommender/Profile.fxml", null);
     }
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
@@ -125,5 +123,29 @@ public class EditProfile {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @Override
+    public void navigateToView(Stage currentStage, String fxmlFile, String title, boolean noDecoration) {
+        try {
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource(fxmlFile));
+            javafx.scene.Parent root = loader.load();
+
+            currentStage.setScene(new javafx.scene.Scene(root));
+
+            if (title != null) {
+                currentStage.setTitle(title);
+            }
+
+            // Remove window decorations if required
+            if (noDecoration) {
+                currentStage.initStyle(javafx.stage.StageStyle.UTILITY); // Removes title bar, close, minimize buttons
+                currentStage.setOpacity(1.0); // Ensures the window is fully opaque
+            }
+
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

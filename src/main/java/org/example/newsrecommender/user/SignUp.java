@@ -11,11 +11,12 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.bson.Document;
+import org.example.newsrecommender.BaseController;
 import org.example.newsrecommender.db.DB;
 
 import java.io.IOException;
 
-public class SignUp {
+public class SignUp implements BaseController {
 
     @FXML
     private Button button_cancel;
@@ -33,19 +34,9 @@ public class SignUp {
 
     @FXML
     public void openLogin() {
-        try {
-            // Load the login.fxml file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/UserLogin.fxml"));
-            Parent root = loader.load();
-
-            // Get the current stage and set the new scene
-            Stage stage = (Stage) button_login.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Login");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage currentStage = (Stage) button_login.getScene().getWindow();
+        // Using overridden navigateToView method
+        navigateToView(currentStage, "/org/example/newsrecommender/UserLogin.fxml", "Login", false);
     }
 
    @FXML
@@ -87,22 +78,11 @@ public class SignUp {
         tf_contact.clear();
     }
 
-      @FXML
+    @FXML
     private void cancelAction() {
-        try {
-            // Load the boot.fxml file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/boot.fxml"));
-            Parent root = loader.load();
-
-            // Get the current stage and set the new scene
-            Stage stage = (Stage) button_cancel.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Boot");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Error", "Unable to load the boot screen.");
-        }
+        Stage currentStage = (Stage) button_cancel.getScene().getWindow();
+        // Using overridden navigateToView method
+        navigateToView(currentStage, "/org/example/newsrecommender/boot.fxml", "Boot", false);
     }
 
     private void showAlert(String title, String message) {
@@ -140,4 +120,33 @@ public class SignUp {
         // If any of the fields are already taken, return true
         return isUsernameTaken || isEmailTaken || isContactTaken;
     }
+
+    // Overridden methods from BaseController for navigation
+
+    @Override
+    public void navigateToView(Stage currentStage, String fxmlFile, String title, boolean noDecoration) {
+        try {
+            // Load the FXML file and set the scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
+
+            // Set the scene and title
+            currentStage.setScene(new Scene(root));
+            if (title != null) {
+                currentStage.setTitle(title);
+            }
+
+            // Remove window decorations if required
+            if (noDecoration) {
+                currentStage.initStyle(javafx.stage.StageStyle.UNDECORATED); // Removes title bar, close, minimize buttons
+            }
+
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Unable to navigate to the requested view.");
+        }
+    }
+
+
 }

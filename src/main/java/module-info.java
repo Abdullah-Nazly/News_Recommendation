@@ -12,6 +12,9 @@ module org.example.newsrecommender {
     requires org.apache.httpcomponents.httpcore;
     requires org.testng;
     requires org.junit.jupiter.api;
+    requires org.apache.opennlp.tools;
+    requires org.apache.commons.csv;
+    requires lucene.core;
 
     opens org.example.newsrecommender to javafx.fxml;
     exports org.example.newsrecommender;

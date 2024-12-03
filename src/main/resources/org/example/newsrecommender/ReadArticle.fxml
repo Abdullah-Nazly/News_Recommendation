@@ -40,7 +40,7 @@
             <TextArea fx:id="articleTextArea" prefHeight="267.0" prefWidth="417.0" />
          </children>
       </AnchorPane>
-      <Text fill="CADETBLUE" layoutX="235.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="READ ARTICLE">
+      <Text fill="CADETBLUE" layoutX="246.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="READ ARTICLE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

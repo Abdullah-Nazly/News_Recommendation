@@ -11,13 +11,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.bson.Document;
+import org.example.newsrecommender.BaseController;
 import org.example.newsrecommender.db.DB;
 import org.example.newsrecommender.user.User;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class DeleteUser {
+public class DeleteUser implements BaseController {
     public TableView<User> userTable;
     public TableColumn<User, String> userName;
     public TableColumn<User, String> password;
@@ -98,12 +99,27 @@ public class DeleteUser {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     @FXML
     private void handleBackButton() {
+        navigateToView((Stage) backButton.getScene().getWindow(), "/org/example/newsrecommender/SystemAdmin.fxml");
+    }
+
+    @Override
+    public void navigateToView(Stage currentStage, String fxmlFile, String title, boolean noDecoration) {
         try {
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/newsrecommender/SystemAdmin.fxml")));
-            stage.setScene(new Scene(root));
+            javafx.scene.Parent root = javafx.fxml.FXMLLoader.load(getClass().getResource(fxmlFile));
+            javafx.scene.Scene scene = new javafx.scene.Scene(root);
+
+            if (noDecoration) {
+                currentStage.initStyle(javafx.stage.StageStyle.UNDECORATED);
+            }
+
+            if (title != null) {
+                currentStage.setTitle(title);
+            }
+            currentStage.setScene(scene);
+            currentStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

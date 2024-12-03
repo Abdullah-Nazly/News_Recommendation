@@ -2,21 +2,17 @@ package org.example.newsrecommender;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import org.bson.types.ObjectId;
 import org.example.newsrecommender.db.DB;
-import org.example.newsrecommender.db.DBservice;
 
 import java.io.IOException;
 
-public class Application {
+public class Application implements BaseController {
 
-    public Button btn_profile;
+    @FXML
+    private Button btn_profile;
     @FXML
     private Button button_logout;
     @FXML
@@ -26,76 +22,70 @@ public class Application {
     @FXML
     private Label label_welcome;
 
-    // This method can be used to handle actions like reading articles
+    /**
+     * Navigate to the Read Article screen.
+     */
     @FXML
     public void openArticle() {
-        try {
-            // Load the ReadArticle.fxml file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/ReadArticle.fxml"));
-            Parent root = loader.load();
-
-            // Get the current stage and set the new scene
-            Stage stage = (Stage) readbutton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Read Article");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage currentStage = (Stage) readbutton.getScene().getWindow();
+        navigateToView(currentStage, "/org/example/newsrecommender/ReadArticle.fxml", "Read Article", true);
     }
 
+    /**
+     * Navigate to the Recommended Articles screen.
+     */
     @FXML
     public void openRecommendation() {
-        try {
-            // Load the ReadArticle.fxml file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/Recommendation.fxml"));
-            Parent root = loader.load();
-            // Get the current stage and set the new scene
-            Stage stage = (Stage) openRecommendation.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Recommended Articles");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage currentStage = (Stage) openRecommendation.getScene().getWindow();
+        navigateToView(currentStage, "/org/example/newsrecommender/Recommendation.fxml", "Recommended Articles");
     }
 
-    // This method is bound to a logout button or some logout action
+    /**
+     * Handle logout action and navigate to the login screen.
+     */
     @FXML
     public void logoutAction() {
-        // Here we can log out the user and navigate them to the login screen
-        try {
-            // Load the login page
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/UserLogin.fxml"));
-            Parent root = loader.load();
-
-            // Get the current stage and set the new scene
-            Stage stage = (Stage) button_logout.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Login");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage currentStage = (Stage) button_logout.getScene().getWindow();
+        navigateToView(currentStage, "/org/example/newsrecommender/UserLogin.fxml", "Login");
     }
 
-    // This method is called when the window is closed to safely close the DB connection
+    /**
+     * Navigate to the Profile screen.
+     */
+    public void go_profile(ActionEvent event) {
+        Stage currentStage = (Stage) btn_profile.getScene().getWindow();
+        navigateToView(currentStage, "/org/example/newsrecommender/Profile.fxml", "Profile");
+    }
+
+    /**
+     * Safely close the application and the database connection.
+     */
     public void closeApp() {
         DB.close();
     }
 
-    public void go_profile(ActionEvent event) {
+    /**
+     * Implementation of the navigateToView method from BaseController_test.
+     */
+    @Override
+    public void navigateToView(Stage currentStage, String fxmlFile, String title, boolean noDecoration) {
         try {
-            // Load the login page
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/Profile.fxml"));
-            Parent root = loader.load();
+            javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(getClass().getResource(fxmlFile));
+            javafx.scene.Parent root = loader.load();
 
+            currentStage.setScene(new javafx.scene.Scene(root));
 
-            // Get the current stage and set the new scene
-            Stage stage = (Stage) btn_profile.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("profile");
-            stage.show();
+            if (title != null) {
+                currentStage.setTitle(title);
+            }
+
+            // Remove window decorations if required
+            if (noDecoration) {
+                currentStage.initStyle(javafx.stage.StageStyle.UTILITY); // Removes title bar, close, minimize buttons
+                currentStage.setOpacity(1.0); // Ensures the window is fully opaque
+            }
+
+            currentStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

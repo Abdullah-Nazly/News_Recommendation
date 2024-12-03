@@ -6,63 +6,70 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.example.newsrecommender.articles.Article;
-import org.bson.Document;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import org.example.newsrecommender.BaseController;
 
 import java.io.IOException;
 import java.util.Objects;
 
-public class SystemAdmin {
+public class SystemAdmin implements BaseController {
 
+    @FXML
     public Button AddArtcleButton;
+    @FXML
     public Button DeleteUserButton;
+    @FXML
     public Button DeleteArticleButton;
+    @FXML
     public Button backButton;
 
+    @FXML
     public void handleAddArticle(ActionEvent event) {
-        try {
-            Stage stage = (Stage) AddArtcleButton.getScene().getWindow();
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/newsrecommender/AddArticle.fxml")));
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage currentStage = (Stage) AddArtcleButton.getScene().getWindow();
+        navigateToView(currentStage, "/org/example/newsrecommender/AddArticle.fxml", null, true);
     }
 
+    @FXML
     public void handleDeleteUser(ActionEvent event) {
-        try {
-            Stage stage = (Stage) DeleteUserButton.getScene().getWindow();
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/newsrecommender/DeleteUser.fxml")));
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage currentStage = (Stage) DeleteUserButton.getScene().getWindow();
+        navigateToView(currentStage, "/org/example/newsrecommender/DeleteUser.fxml", null, false);
     }
 
+    @FXML
     public void handleDeleteArticle(ActionEvent event) {
-        try {
-            Stage stage = (Stage) DeleteArticleButton.getScene().getWindow();
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/newsrecommender/DeleteArticle.fxml")));
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage currentStage = (Stage) DeleteArticleButton.getScene().getWindow();
+        navigateToView(currentStage, "/org/example/newsrecommender/DeleteArticle.fxml", null, true);
     }
 
     @FXML
     private void handleBackButton() {
-        try {
-            Stage stage = (Stage) backButton.getScene().getWindow();
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/newsrecommender/sysLogin.fxml")));
-            stage.setScene(new Scene(root));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage currentStage = (Stage) backButton.getScene().getWindow();
+        navigateToView(currentStage, "/org/example/newsrecommender/sysLogin.fxml", "system login", true);
     }
 
+    // Overridden method from BaseController for navigation
+    @Override
+    public void navigateToView(Stage currentStage, String fxmlFile, String title, boolean noDecoration) {
+        try {
+            // Load the FXML file and set the scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
 
+            // Set the scene and title
+            currentStage.setScene(new Scene(root));
+            if (title != null) {
+                currentStage.setTitle(title);
+            }
+
+            // Remove window decorations if required
+            if (noDecoration) {
+                currentStage.initStyle(javafx.stage.StageStyle.UNDECORATED); // Removes title bar, close, minimize buttons
+            }
+
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Show an alert or handle the error in a user-friendly way
+        }
+    }
 }

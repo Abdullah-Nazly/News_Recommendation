@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
+import org.example.newsrecommender.LoginHandler;
 
 import java.io.IOException;
 import java.util.Objects;

@@ -12,13 +12,14 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import org.example.newsrecommender.Admin.LoginHandler;
+import org.example.newsrecommender.BaseController;
+import org.example.newsrecommender.LoginHandler;
 import org.example.newsrecommender.Session;
 import org.example.newsrecommender.db.DB;
 
 import java.io.IOException;
 
-public class UserLogin extends LoginHandler {
+public class UserLogin extends LoginHandler implements BaseController {
 
     @FXML
     private Button signinbutton;
@@ -39,19 +40,8 @@ public class UserLogin extends LoginHandler {
 
     @FXML
     public void openSignUp() {
-        try {
-            // Load the signup.fxml file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/SignUp.fxml"));
-            Parent root = loader.load();
-
-            // Get the current stage and set the new scene
-            Stage stage = (Stage) signinbutton.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Sign up");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage currentStage = (Stage) signinbutton.getScene().getWindow();
+        navigateToView(currentStage, "/org/example/newsrecommender/SignUp.fxml", "Sign Up");
     }
 
     @FXML
@@ -83,20 +73,8 @@ public class UserLogin extends LoginHandler {
 
     @FXML
     private void cancelAction() {
-        try {
-            // Load the boot.fxml file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/newsrecommender/boot.fxml"));
-            Parent root = loader.load();
-
-            // Get the current stage and set the new scene
-            Stage stage = (Stage) button_cancel.getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Boot");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Error", "Unable to load the boot screen.");
-        }
+        Stage currentStage = (Stage) button_cancel.getScene().getWindow();
+        navigateToView(currentStage, "/org/example/newsrecommender/boot.fxml", "Boot");
     }
 
 
@@ -141,5 +119,37 @@ public class UserLogin extends LoginHandler {
     private void navigateToApplication() {
         Stage stage = (Stage) signinbutton.getScene().getWindow();
         navigateToView(stage, "/org/example/newsrecommender/Application.fxml", "Application");
+    }
+
+    @Override
+    public void navigateToView(Stage currentStage, String fxmlFile, String title, boolean noDecoration) {
+        try {
+            // Standard navigation logic, could be overridden if needed
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
+
+            currentStage.setScene(new Scene(root));
+            if (title != null) {
+                currentStage.setTitle(title);
+            }
+            if (noDecoration) {
+                currentStage.initStyle(javafx.stage.StageStyle.UNDECORATED);
+            }
+
+            currentStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Navigation Error", "Failed to load " + fxmlFile);
+        }
+    }
+
+    @Override
+    public void navigateToView(Stage currentStage, String fxmlFile) {
+        BaseController.super.navigateToView(currentStage, fxmlFile);
+    }
+
+    @Override
+    public void navigateToView(Stage currentStage, String fxmlFile, String title) {
+        BaseController.super.navigateToView(currentStage, fxmlFile, title);
     }
 }
