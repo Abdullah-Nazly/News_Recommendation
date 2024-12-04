@@ -2,10 +2,16 @@ package org.example.newsrecommender;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import org.bson.types.ObjectId;
 import org.example.newsrecommender.db.DB;
+import org.example.newsrecommender.db.DBservice;
+import org.example.newsrecommender.user.Profile;
 
 import java.io.IOException;
 
@@ -22,6 +28,8 @@ public class Application implements BaseController {
     @FXML
     private Label label_welcome;
 
+    private DBservice dbService; // The database service instance
+    private ObjectId currentUserId; // Current user ID
     /**
      * Navigate to the Read Article screen.
      */
@@ -81,7 +89,7 @@ public class Application implements BaseController {
 
             // Remove window decorations if required
             if (noDecoration) {
-                currentStage.initStyle(javafx.stage.StageStyle.UTILITY); // Removes title bar, close, minimize buttons
+//                currentStage.initStyle(javafx.stage.StageStyle.UTILITY); // Removes title bar, close, minimize buttons
                 currentStage.setOpacity(1.0); // Ensures the window is fully opaque
             }
 

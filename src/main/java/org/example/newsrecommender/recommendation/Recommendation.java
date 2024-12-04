@@ -32,7 +32,6 @@ public class Recommendation {
     private TextArea content_area;
     @FXML
     private Button backButton;
-    ObservableList<Article> articleList = FXCollections.observableArrayList();
 
 
     private RecommendationManager recommendationManager;

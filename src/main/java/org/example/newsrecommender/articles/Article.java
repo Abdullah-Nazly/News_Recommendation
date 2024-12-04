@@ -18,9 +18,9 @@ public class Article {
         this.articleId = articleId;
         this.link = link;
         this.headline = headline;
-        this.category = category;
-        this.author = author;
-        this.date = date;
+        this.category = category != null ? category : "Unknown";
+        this.author = author != null ? author : "Unknown";
+        this.date = date != null ? date : "Unknown";
     }
 
     // Constructor without articleId

@@ -11,9 +11,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.example.newsrecommender.BaseController;
+import org.example.newsrecommender.Session;
 import org.example.newsrecommender.articles.Article;
+import org.example.newsrecommender.db.DB;
 import org.example.newsrecommender.db.DBservice;
 
 import java.io.IOException;
@@ -35,77 +38,72 @@ public class Profile implements BaseController {
     @FXML private TableColumn<Article, String> savedCategoryColumn;
     @FXML private TableColumn<Article, String> savedDateColumn;
 
-    private DBservice dbService; // Service to interact with the database
-    private ObjectId currentUserId; // ID of the current user (to be passed or initialized)
 
-    public Profile(){
-        // Default constructor to initialize the fxml file
-    }
-    public Profile(DBservice dbService, ObjectId currentUserId) {
-        this.dbService = dbService;
-        this.currentUserId = currentUserId;
-    }
-
-    // This method will be called to initialize the profile screen
     @FXML
     public void initialize() {
-        if (dbService == null || currentUserId == null) {
-            System.err.println("DBservice or currentUserId is not set. Ensure they are initialized before calling initialize().");
-            return;
-        }
-
-        // Set up table columns
-        setupTableColumns();
-
-        // Load articles
-        loadLikedArticles(currentUserId);
-        loadSavedArticles(currentUserId);
-    }
-
-    private void setupTableColumns() {
+        // Initialize columns for liked articles
         likedTitleColumn.setCellValueFactory(new PropertyValueFactory<>("headline"));
         likedCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         likedDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
+        // Initialize columns for saved articles
         savedTitleColumn.setCellValueFactory(new PropertyValueFactory<>("headline"));
         savedCategoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         savedDateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        // Ensure the database is connected and load the user's articles
+        DB.connect();
+        loadUserArticles();
     }
 
-     // Load liked articles from the database
-    private void loadLikedArticles(ObjectId currentUserId) {
-        try {
-            List<ObjectId> likedArticleIds = dbService.getArticleIds(currentUserId, "liked_articles");
-            List<Article> likedArticles = dbService.getArticlesByIds(likedArticleIds);
+    private void loadUserArticles() {
+    var userLikesCollection = DB.getDatabase().getCollection("user_likes");
+    var articlesCollection = DB.getDatabase().getCollection("articles");
 
-            ObservableList<Article> likedArticlesList = FXCollections.observableArrayList(likedArticles);
-            likedArticlesTable.setItems(likedArticlesList);
-        } catch (Exception e) {
-            System.err.println("Error loading liked articles: " + e.getMessage());
-            e.printStackTrace();
-        }
+    if (!Session.isLoggedIn()) {
+        System.err.println("No user is logged in. Cannot load user articles.");
+        return;
     }
 
-    // Load saved articles from the database
-    private void loadSavedArticles(ObjectId currentUserId) {
-        try {
-            List<ObjectId> savedArticleIds = dbService.getArticleIds(currentUserId, "saved_articles");
-            List<Article> savedArticles = dbService.getArticlesByIds(savedArticleIds);
+    User currentUser = Session.getCurrentUser();
+    ObjectId userId = currentUser.getUserId();
 
-            ObservableList<Article> savedArticlesList = FXCollections.observableArrayList(savedArticles);
-            savedArticlesTable.setItems(savedArticlesList);
-        } catch (Exception e) {
-            System.err.println("Error loading saved articles: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-    public void setDBservice(DBservice dbService) {
-        this.dbService = dbService;
+    // Fetch the user's document from the `userlikes` collection
+    Document userDocument = userLikesCollection.find(new Document("user_id", userId)).first();
+
+    if (userDocument == null) {
+        System.err.println("User not found in userlikes collection.");
+        return;
     }
 
-    public void setCurrentUserId(ObjectId currentUserId) {
-        this.currentUserId = currentUserId;
+    // Fetch liked articles
+    List<ObjectId> likedArticleIds = userDocument.getList("liked_articles", ObjectId.class);
+    ObservableList<Article> likedArticles = FXCollections.observableArrayList();
+
+    if (likedArticleIds != null) {
+        likedArticleIds.forEach(articleId -> {
+            Document articleDoc = articlesCollection.find(new Document("_id", articleId)).first();
+            if (articleDoc != null) {
+                likedArticles.add(Article.fromDocument(articleDoc));
+            }
+        });
     }
+    likedArticlesTable.setItems(likedArticles);
+
+    // Fetch saved articles
+    List<ObjectId> savedArticleIds = userDocument.getList("saved_articles", ObjectId.class);
+    ObservableList<Article> savedArticles = FXCollections.observableArrayList();
+
+    if (savedArticleIds != null) {
+        savedArticleIds.forEach(articleId -> {
+            Document articleDoc = articlesCollection.find(new Document("_id", articleId)).first();
+            if (articleDoc != null) {
+                savedArticles.add(Article.fromDocument(articleDoc));
+            }
+        });
+    }
+    savedArticlesTable.setItems(savedArticles);
+}
 
     @FXML
     private void handleBackButton() {
@@ -117,6 +115,8 @@ public class Profile implements BaseController {
             e.printStackTrace();
         }
     }
+
+
 
 
     public void handleEditButton() {

@@ -105,6 +105,7 @@ public class ArticleCategorizer {
     }
 
     // Process a dataset and categorize articles
+    // Process a dataset and categorize articles
     public void processDataset(String inputCsvPath, String outputCsvPath) throws IOException {
         Reader in = new FileReader(inputCsvPath);
         CSVParser parser = new CSVParser(in, CSVFormat.DEFAULT.withHeader("link", "headline", "category", "short_description", "authors", "date"));
@@ -113,14 +114,21 @@ public class ArticleCategorizer {
         // Keep the same headers but update the "category" column during processing
         List<String> headers = new ArrayList<>(parser.getHeaderMap().keySet());
 
-        // Check if header row exists and write it correctly
-        if (records.size() > 0) {
+        // Write output only if valid records are present
+        if (!records.isEmpty()) {
             Writer out = new FileWriter(outputCsvPath);
             CSVPrinter printer = new CSVPrinter(out, CSVFormat.DEFAULT.withHeader(headers.toArray(new String[0])));
 
             for (CSVRecord record : records) {
-                // Read and process the headline
-                String headline = record.get("headline");
+                // Validate and process the record
+                String headline = record.get("headline").trim();
+                String category = record.get("category").trim();
+
+                // Skip invalid records
+                if (headline.isEmpty() || category.isEmpty()) {
+                    System.err.println("Skipping invalid record: " + record);
+                    continue;
+                }
 
                 // Predict the category for this headline
                 String predictedCategory = categorize(headline);
@@ -144,6 +152,7 @@ public class ArticleCategorizer {
             System.err.println("No records found in the input CSV.");
         }
     }
+
 
     // Keyword extraction using Lucene
     private String extractKeywords(String text) throws IOException {
@@ -209,9 +218,9 @@ public class ArticleCategorizer {
     public static void main(String[] args) throws IOException {
         ArticleCategorizer categorizer = new ArticleCategorizer();
 
-        categorizer.trainModel("csvFiles/training_articles.csv");
-        categorizer.evaluateModel("csvFiles/testing_article.csv");
-        categorizer.processDataset("csvFiles/articles_for_prediction.csv", "categorized_articles.csv");
+        categorizer.trainModel("CSVfiles/training_articles.csv");
+        categorizer.evaluateModel("CSVfiles/testing_articles.csv");
+        categorizer.processDataset("CSVfiles/articles_for_prediction.csv", "categorized_articles.csv");
         System.out.println("Categorization completed!");
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
+import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.in;
 
 public class DBservice {
@@ -20,11 +21,14 @@ public class DBservice {
     private final MongoDatabase database;
     private final MongoCollection<Document> userLikesCollection;
     private final MongoCollection<Document> articleCollection;
+    private final MongoCollection<Document> userCollection;
+
 
     public DBservice(MongoDatabase database) {
         if (database == null) {
             throw new IllegalArgumentException("Database cannot be null");
         }
+        this.userCollection = database.getCollection("users");
         this.database = database;
         this.userLikesCollection = database.getCollection("user_likes");
         this.articleCollection = database.getCollection("articles");
@@ -68,28 +72,20 @@ public class DBservice {
         return articles;  // Return the list of articles
     }
 
-    // Fetch liked or saved article IDs from the userlikes collection
-    public List<ObjectId> getArticleIds(ObjectId userId, String field) {
-        MongoCollection<org.bson.Document> userLikesCollection = database.getCollection("user_likes");
-        org.bson.Document user = userLikesCollection.find(new org.bson.Document("user_id", userId)).first();
-        System.out.println(userId);
-        if (user != null) {
-            return user.getList(field, ObjectId.class);
-        }
-        return new ArrayList<>();
+    // Fetch IDs for liked or saved articles
+    public List<ObjectId> getArticleIds(ObjectId userId, String fieldName) {
+        Document userDoc = userCollection.find(eq("_id", userId)).first();
+        return userDoc != null && userDoc.containsKey(fieldName)
+                ? userDoc.getList(fieldName, ObjectId.class)
+                : new ArrayList<>();
     }
 
-    // Fetch article details by a list of IDs from the articles collection
+    // Fetch article details by IDs
     public List<Article> getArticlesByIds(List<ObjectId> articleIds) {
-        MongoCollection<org.bson.Document> articlesCollection = database.getCollection("articles");
-        System.out.println(articleIds);
+        List<Document> articleDocs = articleCollection.find(in("_id", articleIds)).into(new ArrayList<>());
         List<Article> articles = new ArrayList<>();
-
-        for (ObjectId articleId : articleIds) {
-            Document articleDoc = articlesCollection.find(new Document("_id", articleId)).first();
-            if (articleDoc != null) {
-                articles.add(Article.fromDocument(articleDoc));
-            }
+        for (Document doc : articleDocs) {
+            articles.add(Article.fromDocument(doc));
         }
         return articles;
     }
