@@ -22,7 +22,7 @@ public class AddArticle implements BaseController {
     public TextField category;
     public TextField date;
     @FXML
-    private Button backButton;
+    Button backButton;
 
     public void handleAddButton() {
         String linkText = link.getText().trim();
@@ -46,7 +46,7 @@ public class AddArticle implements BaseController {
         date.clear();
     }
 
-    private void saveArticle(String link, String headline, String category, String date) {
+    void saveArticle(String link, String headline, String category, String date) {
         // Create a connection to the database
         var database = DB.getDatabase();
         var articlesCollection = database.getCollection("articles");
@@ -69,6 +69,7 @@ public class AddArticle implements BaseController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     @FXML
     private void handleBackButton() {
         navigateToView((Stage) backButton.getScene().getWindow(), "/org/example/newsrecommender/SystemAdmin.fxml");

@@ -59,9 +59,6 @@
         <version>1.2.10</version> <!-- Use the latest version -->
     </dependency>
 
-
-
-
     <!-- JUnit Dependencies -->
       <dependency>
         <groupId>org.junit.jupiter</groupId>
@@ -69,16 +66,30 @@
         <version>5.10.0</version> <!-- Replace with the latest version -->
         <scope>test</scope>
     </dependency>
+    <!-- JUnit 5 API -->
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>${junit.version}</version>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.10.0</version>
+        <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>5.10.0</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-commons</artifactId>
+        <version>1.10.0</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.junit.platform</groupId>
+        <artifactId>junit-platform-engine</artifactId>
+        <version>1.10.0</version>
+        <scope>test</scope>
     </dependency>
     <dependency>
         <groupId>org.apache.httpcomponents</groupId>

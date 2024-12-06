@@ -60,6 +60,11 @@ public class EditProfile implements BaseController {
             showAlert(Alert.AlertType.ERROR, "Form Error", "Contact number must be exactly 10 digits.");
             return;
         }
+        if (!isValidEmail(newEmail)) {
+            showAlert(Alert.AlertType.ERROR, "Form Error", "Invalid email format. Please enter a valid email address.");
+            return;
+        }
+
 
         if (isDuplicateUser(newUsername, newEmail, newContact)) {
             showAlert(Alert.AlertType.ERROR, "Duplicate Entry", "Username, email, or contact number already exists. Please choose different values.");
@@ -76,6 +81,13 @@ public class EditProfile implements BaseController {
         updateUserInDatabase();
 
         showAlert(Alert.AlertType.INFORMATION, "Success", "Profile updated successfully.");
+    }
+
+    // Utility method to validate email format
+    private boolean isValidEmail(String email) {
+        // Regular expression for validating email addresses
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        return email.matches(emailRegex);
     }
 
     // Helper method to update the user in the database

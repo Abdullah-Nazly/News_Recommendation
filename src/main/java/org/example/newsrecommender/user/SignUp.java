@@ -39,7 +39,7 @@ public class SignUp implements BaseController {
         navigateToView(currentStage, "/org/example/newsrecommender/UserLogin.fxml", "Login", false);
     }
 
-   @FXML
+    @FXML
     public void signUpAction() {
         String username = tf_username.getText().trim();
         String password = tf_password.getText().trim();
@@ -55,6 +55,12 @@ public class SignUp implements BaseController {
             showAlert(Alert.AlertType.ERROR, "Form Error", "Contact number must be exactly 10 digits.");
             return;
         }
+
+        if (!isValidEmail(email)) {
+            showAlert(Alert.AlertType.ERROR, "Form Error", "Invalid email format. Please enter a valid email address.");
+            return;
+        }
+
 
         if (isDuplicateUser(username, email, contact)) {
             showAlert(Alert.AlertType.ERROR, "Duplicate Entry", "Username, email, or contact number already exists. Please choose different values.");
@@ -78,6 +84,12 @@ public class SignUp implements BaseController {
         tf_contact.clear();
     }
 
+        // Utility method to validate email format
+    private boolean isValidEmail(String email) {
+        // Regular expression for validating email addresses
+        String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        return email.matches(emailRegex);
+    }
     @FXML
     private void cancelAction() {
         Stage currentStage = (Stage) button_cancel.getScene().getWindow();

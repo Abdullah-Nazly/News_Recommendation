@@ -44,7 +44,7 @@ public class SystemAdmin implements BaseController {
     @FXML
     private void handleBackButton() {
         Stage currentStage = (Stage) backButton.getScene().getWindow();
-        navigateToView(currentStage, "/org/example/newsrecommender/sysLogin.fxml", "system login", true);
+        navigateToView(currentStage, "/org/example/newsrecommender/sysLogin.fxml", "system login");
     }
 
     // Overridden method from BaseController for navigation
@@ -59,11 +59,6 @@ public class SystemAdmin implements BaseController {
             currentStage.setScene(new Scene(root));
             if (title != null) {
                 currentStage.setTitle(title);
-            }
-
-            // Remove window decorations if required
-            if (noDecoration) {
-                currentStage.initStyle(javafx.stage.StageStyle.UNDECORATED); // Removes title bar, close, minimize buttons
             }
 
             currentStage.show();

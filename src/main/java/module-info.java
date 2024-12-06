@@ -11,7 +11,10 @@ module org.example.newsrecommender {
     requires org.apache.httpcomponents.httpclient;
     requires org.apache.httpcomponents.httpcore;
     requires org.testng;
-    requires org.junit.jupiter.api;
+//    requires org.junit.jupiter.api;      // For JUnit 5 API
+//    requires org.junit.jupiter.engine;   // For JUnit 5 engine
+//    requires org.junit.platform.commons; // For JUnit platform commons
+//    requires org.junit.platform.engine;
     requires org.apache.opennlp.tools;
     requires org.apache.commons.csv;
     requires lucene.core;
