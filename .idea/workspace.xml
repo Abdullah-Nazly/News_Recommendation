@@ -5,42 +5,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ece1d37b-2eca-476a-96e4-066c98152930" name="Changes" comment="First commit">
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/recommendation/RecommendationManagerConcurrencyTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec_Model/News_Category_Dataset_v3.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec_Model/Recommendation_model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec_Model/database.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rec_Model/db_connection.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/categorized_articles.csv" beforeDir="false" afterPath="$PROJECT_DIR$/categorized_articles.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/AddArticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/AddArticle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/DeleteArticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/DeleteArticle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/DeleteUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/DeleteUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/SysLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/SysLogin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/SystemAdmin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Admin/SystemAdmin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/recommendation/RecommendationManagerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/ArticleCategorizer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/NLP/ArticleCategorizer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/LoginHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/LoginHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/articles/Article.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/articles/Article.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/articles/ArticleLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/articles/ArticleLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/articles/ReadArticle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/articles/ReadArticle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/db/DBservice.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/db/DBservice.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/recommendation/ArticleFetcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/recommendation/ArticleFetcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/recommendation/Recommendation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/recommendation/Recommendation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/recommendation/RecommendationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/recommendation/RecommendationManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/EditProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/EditProfile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/SignUp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/SignUp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/Admin/AddArticleTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/Admin/DeleteArticleTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/Admin/DeleteUserTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/Admin/SysLoginTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/Admin/SystemAdminTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/ApplicationTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/BaseControllerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/LoginHandlerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/SessionTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/articles/ArticleLoaderTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/articles/ArticleTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/articles/ContentLoaderTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/articles/ReadArticleTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/db/DBTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/db/DBserviceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/recommendation/ArticleFetcherTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/recommendation/RecommendationManagerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/recommendation/RecommendationTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/recommendation/UserPreferencesServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/user/EditProfileTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/user/ProfileTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/user/SignUpTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/user/UserLoginTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/user/UserLogsTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/user/UserPointsTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/user/UserPreferencesTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/newsrecommender/user/UserTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/UserPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/newsrecommender/user/UserPoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/Login.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/AddArticle.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/AddArticle.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Application.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Application.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/DeleteArticle.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/DeleteArticle.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/DeleteUser.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/DeleteUser.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Profile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Profile.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Recommendation.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/Recommendation.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/SignUp.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/SignUp.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/SystemAdmin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/SystemAdmin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/UserLogin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/UserLogin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/editProfile.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/editProfile.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/sysLogin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/newsrecommender/sysLogin.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,24 +159,22 @@
     </key>
   </component>
   <component name="RunManager" selected="Application.Main">
-    <configuration name="Main" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="org.example.newsrecommender.Main" />
+    <configuration name="ArticleCategorizer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.newsrecommender.NLP.ArticleCategorizer" />
       <module name="NewsRecommender" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.newsrecommender.NLP.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AddArticleTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Main" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="org.example.newsrecommender.Main" />
       <module name="NewsRecommender" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.newsrecommender.Admin.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.newsrecommender.Admin" />
-      <option name="MAIN_CLASS_NAME" value="org.example.newsrecommender.Admin.AddArticleTest" />
-      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -246,9 +245,9 @@
       <list>
         <item itemvalue="JUnit.RecommendationManagerConcurrencyTest.testConcurrentRecommendationsForMultipleUsers" />
         <item itemvalue="JUnit.RecommendationManagerConcurrencyTest" />
+        <item itemvalue="Application.ArticleCategorizer" />
         <item itemvalue="JUnit.RecommendationManagerConcurrencyTest.testConcurrentRecommendations" />
         <item itemvalue="JUnit.RecommendationManagerTest" />
-        <item itemvalue="JUnit.AddArticleTest" />
       </list>
     </recent_temporary>
   </component>
@@ -337,7 +336,7 @@
       <workItem from="1733327944428" duration="5996000" />
       <workItem from="1733385826622" duration="2250000" />
       <workItem from="1733402217326" duration="4930000" />
-      <workItem from="1733407789291" duration="6819000" />
+      <workItem from="1733407789291" duration="16103000" />
     </task>
     <task id="LOCAL-00001" summary="First commit">
       <option name="closed" value="true" />

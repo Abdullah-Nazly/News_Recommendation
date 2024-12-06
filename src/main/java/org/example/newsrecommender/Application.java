@@ -25,11 +25,6 @@ public class Application implements BaseController {
     private Button readbutton;
     @FXML
     private Button openRecommendation;
-    @FXML
-    private Label label_welcome;
-
-    private DBservice dbService; // The database service instance
-    private ObjectId currentUserId; // Current user ID
     /**
      * Navigate to the Read Article screen.
      */
@@ -65,12 +60,6 @@ public class Application implements BaseController {
         navigateToView(currentStage, "/org/example/newsrecommender/Profile.fxml", "Profile");
     }
 
-    /**
-     * Safely close the application and the database connection.
-     */
-    public void closeApp() {
-        DB.close();
-    }
 
     /**
      * Implementation of the navigateToView method from BaseController_test.
@@ -89,7 +78,6 @@ public class Application implements BaseController {
 
             // Remove window decorations if required
             if (noDecoration) {
-//                currentStage.initStyle(javafx.stage.StageStyle.UTILITY); // Removes title bar, close, minimize buttons
                 currentStage.setOpacity(1.0); // Ensures the window is fully opaque
             }
 

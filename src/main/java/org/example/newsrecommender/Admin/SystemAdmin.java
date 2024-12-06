@@ -12,7 +12,7 @@ import org.example.newsrecommender.BaseController;
 import java.io.IOException;
 import java.util.Objects;
 
-public class SystemAdmin implements BaseController {
+public class SystemAdmin implements BaseController { // interface with overriding method is used
 
     @FXML
     public Button AddArtcleButton;

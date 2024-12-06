@@ -24,7 +24,7 @@
             <TableColumn fx:id="email" prefWidth="143.3333740234375" text="Email" />
         </columns>
       </TableView>
-      <Button fx:id="backButton" layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: transparent;">
+      <Button fx:id="backButton" layoutX="14.0" layoutY="21.0" mnemonicParsing="false" onAction="#handleBackButton" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>

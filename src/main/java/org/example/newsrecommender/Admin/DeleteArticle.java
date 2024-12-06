@@ -1,11 +1,7 @@
 package org.example.newsrecommender.Admin;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -17,9 +13,8 @@ import org.example.newsrecommender.articles.Article;
 import org.example.newsrecommender.db.DB;
 
 import java.io.IOException;
-import java.util.Objects;
 
-public class DeleteArticle implements BaseController {
+public class DeleteArticle implements BaseController { // interface with overriding method is used
 
     public TableView<Article> articleTable;
     public TableColumn<Article, String> link;
@@ -29,7 +24,7 @@ public class DeleteArticle implements BaseController {
     public Button backButton;
 
     public void initialize() {
-            // Bind the TableColumns to the Article properties
+        // Bind the TableColumns to the Article properties
         link.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getLink()));
         headline.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getHeadline()));
         category.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getCategory()));

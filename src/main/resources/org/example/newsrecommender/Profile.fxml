@@ -5,16 +5,18 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="400.0" prefWidth="431.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.newsrecommender.user.Profile">
    <children>
-      <Button fx:id="editButton" layoutX="178.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleEditButton" style="-fx-background-color: #5F9EA0;" text="Edit Account" textFill="WHITE" />
+      <Button fx:id="editButton" layoutX="178.0" layoutY="87.0" mnemonicParsing="false" onAction="#handleEditButton" style="-fx-background-color: #5F9EA0; -fx-cursor: hand;" text="Edit Account" textFill="WHITE" />
       <TabPane layoutX="65.0" layoutY="139.0" prefHeight="231.0" prefWidth="309.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Liked Articles">
+          <Tab style="-fx-cursor: hand;" text="Liked Articles">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -29,7 +31,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Saved Articles">
+            <Tab style="-fx-cursor: hand;" text="Saved Articles">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
@@ -51,6 +53,13 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <Button fx:id="backButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleBackButton" text="Back" />
+      <Button fx:id="backButton" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleBackButton" style="-fx-background-color: transparent; -fx-cursor: hand;">
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+               <image>
+                  <Image url="@../../../images/left-arrow.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
    </children>
 </AnchorPane>

@@ -1,9 +1,6 @@
 package org.example.newsrecommender.Admin;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -16,9 +13,8 @@ import org.example.newsrecommender.db.DB;
 import org.example.newsrecommender.user.User;
 
 import java.io.IOException;
-import java.util.Objects;
 
-public class DeleteUser implements BaseController {
+public class DeleteUser implements BaseController { // interface with overriding method is used
     public TableView<User> userTable;
     public TableColumn<User, String> userName;
     public TableColumn<User, String> password;
@@ -41,6 +37,7 @@ public class DeleteUser implements BaseController {
     }
 
     private void loadUsersFromDatabase() {
+        // initializing the database
         var database = DB.getDatabase();
         var usersCollection = database.getCollection("users");
 
@@ -101,7 +98,7 @@ public class DeleteUser implements BaseController {
     }
 
     @FXML
-    private void handleBackButton() {
+    private void handleBackButton() { // back button
         navigateToView((Stage) backButton.getScene().getWindow(), "/org/example/newsrecommender/SystemAdmin.fxml");
     }
 

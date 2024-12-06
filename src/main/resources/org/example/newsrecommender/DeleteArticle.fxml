@@ -24,9 +24,9 @@
             <TableColumn fx:id="date" prefWidth="82.0" text="Date" />
         </columns>
       </TableView>
-      <Button fx:id="backButton" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleBackButton" style="-fx-background-color: transparent;" textFill="WHITE">
+      <Button fx:id="backButton" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleBackButton" style="-fx-background-color: transparent; -fx-cursor: hand;" textFill="WHITE">
          <graphic>
-            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                <image>
                   <Image url="@../../../images/left-arrow.png" />
                </image>

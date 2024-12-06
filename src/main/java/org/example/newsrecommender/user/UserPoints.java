@@ -92,7 +92,7 @@ public class UserPoints {
                 System.out.println("Article already saved");
             }
         } else {
-            // If the user does not exist, create a new document with saved articles
+            // If not exist, create a new document with saved articles
             List<ObjectId> savedArticles = new ArrayList<>();
             savedArticles.add(articleId);
 

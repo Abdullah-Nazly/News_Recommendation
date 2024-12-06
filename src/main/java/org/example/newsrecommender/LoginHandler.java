@@ -8,10 +8,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public abstract class LoginHandler {
+    // Abstract method to verify the credentials entered by the user.
 
     protected abstract boolean verifyCredentials(String password);
 
-     protected void navigateToView(Stage currentStage, String fxmlFile, String title) {
+    //Navigates to a new view by loading the specified FXML file and setting it as the current scene.
+    protected void navigateToView(Stage currentStage, String fxmlFile, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();

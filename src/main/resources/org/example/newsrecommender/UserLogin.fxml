@@ -25,7 +25,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Text layoutX="53.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dont have an Account ?">
+                  <Text layoutX="53.0" layoutY="341.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an Account ?">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -35,7 +35,7 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="button_cancel" layoutX="244.0" layoutY="52.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="35.0" prefWidth="20.0" style="-fx-background-color: transparent;">
+                  <Button fx:id="button_cancel" layoutX="244.0" layoutY="52.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="35.0" prefWidth="20.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
                      <graphic>
                         <ImageView fitHeight="17.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
                            <image>

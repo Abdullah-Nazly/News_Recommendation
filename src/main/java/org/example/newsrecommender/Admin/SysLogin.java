@@ -13,7 +13,7 @@ import org.example.newsrecommender.LoginHandler;
 import java.io.IOException;
 import java.util.Objects;
 
-public class SysLogin extends LoginHandler {
+public class SysLogin extends LoginHandler { // Abstracted and inherited
 
     @FXML
     private PasswordField password_field;
@@ -47,7 +47,7 @@ public class SysLogin extends LoginHandler {
         return defaultPassword.equals(password);
     }
     private void navigateToAdminPanel() {
-        // Get the current stage from any node in the scene (e.g., password_field)
+        // Get the current stage from any node in the scene
         Stage currentStage = (Stage) password_field.getScene().getWindow();
         navigateToView(currentStage, "/org/example/newsrecommender/systemAdmin.fxml", "System Admin Panel");
     }

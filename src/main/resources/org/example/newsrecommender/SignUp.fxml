@@ -57,7 +57,7 @@
                </font>
             </Text>
             <TextField fx:id="tf_email" layoutX="125.0" layoutY="199.0" prefHeight="32.0" prefWidth="177.0" promptText="name@example.com" />
-            <Button fx:id="button_cancel" layoutX="273.0" layoutY="50.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: transparent;" textFill="#fff2f2">
+            <Button fx:id="button_cancel" layoutX="273.0" layoutY="50.0" mnemonicParsing="false" onAction="#cancelAction" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: transparent; -fx-cursor: hand;" textFill="#fff2f2">
                <graphic>
                   <ImageView fitHeight="17.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>

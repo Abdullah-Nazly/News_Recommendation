@@ -5,7 +5,7 @@ import org.bson.types.ObjectId;
 
 import java.util.Objects;
 
-public class Article {
+public class Article { // article class with getters and setters
     private ObjectId articleId;
     private String link;
     private String headline;
@@ -44,15 +44,6 @@ public class Article {
                 document.getString("author"),
                 document.getString("date")
         );
-    }
-
-    // Convert Article to MongoDB Document
-    public Document toDocument() {
-        return new Document("link", link)
-                .append("headline", headline)
-                .append("category", category)
-                .append("author", author)
-                .append("date", date);
     }
 
     // Getters and Setters

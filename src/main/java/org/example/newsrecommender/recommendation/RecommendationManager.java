@@ -17,9 +17,10 @@ public class RecommendationManager {
     private static final Logger logger = Logger.getLogger(RecommendationManager.class.getName());
     private final UserPreferencesService preferencesService;
     private final ArticleFetcher articleFetcher;
-    private final ObservableList<Article> articleList;
-    private final ExecutorService executorService;
+    private final ObservableList<Article> articleList; // List to hold recommended articles
+    private final ExecutorService executorService; // Executor for concurrent tasks
 
+    // Constructor to initialize required services and set up executor
     public RecommendationManager(UserPreferencesService preferencesService, ArticleFetcher articleFetcher) {
         this.preferencesService = preferencesService;
         this.articleFetcher = articleFetcher;
@@ -27,23 +28,21 @@ public class RecommendationManager {
         this.executorService = Executors.newFixedThreadPool(4); // Adjust threads for concurrency
     }
 
-    public void recommendArticles(ObjectId userId) {
+    public void recommendArticles(ObjectId userId) { //Generates article recommendations for a given user.
         try {
             UserPreferences preferences = preferencesService.fetchUserPreferences(userId);
             Map<String, Integer> sortedCategories = preferencesService.getSortedCategoryPoints(preferences);
 
             articleList.clear();
 
-            List<Future<List<Article>>> futures = new ArrayList<>();
-            int categoryCount = 0;
+            List<Future<List<Article>>> futures = new ArrayList<>(); // List to hold async tasks
+            int categoryCount = 0; // Limit recommendations to top 4 categories
 
             for (Map.Entry<String, Integer> entry : sortedCategories.entrySet()) {
                 String category = entry.getKey();
-                int numArticles = getNumArticles(categoryCount);
-
                 futures.add(executorService.submit(() -> {
                     List<Article> articles = articleFetcher.fetchArticlesByCategory(category, 7);
-                    return rankArticles(articles, preferences);
+                    return rankArticles(articles, preferences); // Rank articles based on preferences
                 }));
 
                 if (++categoryCount >= 4) break;
@@ -59,16 +58,7 @@ public class RecommendationManager {
         }
     }
 
-    private int getNumArticles(int rank) {
-        return switch (rank) {
-            case 0 -> 4;
-            case 1 -> 3;
-            case 2 -> 2;
-            case 3 -> 1;
-            default -> 0;
-        };
-    }
-
+    //Ranks a list of articles based on user preferences.
     private List<Article> rankArticles(List<Article> articles, UserPreferences preferences) {
         Set<String> likedCategories = new HashSet<>(preferences.getLikedCategories());
         Map<String, Integer> categoryPoints = preferences.getCategoryPoints();
@@ -80,21 +70,14 @@ public class RecommendationManager {
                 .collect(Collectors.toList());
     }
 
+    //Calculates cosine similarity between an article and user's preferences.
     private double calculateCosineSimilarity(Article article, Set<String> likedCategories, Map<String, Integer> categoryPoints) {
         int articleCategoryScore = categoryPoints.getOrDefault(article.getCategory(), 0);
-        return likedCategories.contains(article.getCategory()) ? articleCategoryScore * 1.0 : 0.5 * articleCategoryScore;
+        return likedCategories.contains(article.getCategory()) ? articleCategoryScore * 1.0 : 0.5 * articleCategoryScore; // Adjust score based on user preference
     }
-
-    private void printRecommendationsToConsole() {
-        logger.info("Recommended Articles:");
-        articleList.forEach(article -> logger.info(article.toString()));
-    }
-
+    //Returns the list of recommended articles.
     public ObservableList<Article> getArticleList() {
         return articleList;
     }
 
-    public void shutDownExecutor() {
-        executorService.shutdown();
-    }
 }

@@ -31,4 +31,6 @@ module org.example.newsrecommender {
     opens org.example.newsrecommender.articles to javafx.fxml;
     exports org.example.newsrecommender.recommendation;
     opens org.example.newsrecommender.recommendation to javafx.fxml;
+    exports org.example.newsrecommender.NLP;
+    opens org.example.newsrecommender.NLP to javafx.fxml;
 }

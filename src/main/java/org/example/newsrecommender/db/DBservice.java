@@ -72,28 +72,4 @@ public class DBservice {
         return articles;  // Return the list of articles
     }
 
-    // Fetch IDs for liked or saved articles
-    public List<ObjectId> getArticleIds(ObjectId userId, String fieldName) {
-        Document userDoc = userCollection.find(eq("_id", userId)).first();
-        return userDoc != null && userDoc.containsKey(fieldName)
-                ? userDoc.getList(fieldName, ObjectId.class)
-                : new ArrayList<>();
-    }
-
-    // Fetch article details by IDs
-    public List<Article> getArticlesByIds(List<ObjectId> articleIds) {
-        List<Document> articleDocs = articleCollection.find(in("_id", articleIds)).into(new ArrayList<>());
-        List<Article> articles = new ArrayList<>();
-        for (Document doc : articleDocs) {
-            articles.add(Article.fromDocument(doc));
-        }
-        return articles;
-    }
-
-    public Document getUserDocument(ObjectId userId) {
-        return userLikesCollection.find(new Document("user_id", userId)).first();
-    }
-
-
-
 }

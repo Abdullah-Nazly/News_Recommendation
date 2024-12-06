@@ -1,9 +1,6 @@
 package org.example.newsrecommender.Admin;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -13,14 +10,18 @@ import org.example.newsrecommender.BaseController;
 import org.example.newsrecommender.db.DB;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
-public class AddArticle implements BaseController {
+
+public class AddArticle implements BaseController { // interface with overriding method is used
 
     public TextField link;
     public TextField headline;
     public TextField category;
-    public TextField date;
+    public TextField short_description;
     @FXML
     Button backButton;
 
@@ -28,22 +29,31 @@ public class AddArticle implements BaseController {
         String linkText = link.getText().trim();
         String headlineText = headline.getText().trim();
         String categoryText = category.getText().trim().toUpperCase(); // Convert category to uppercase
-        String dateText = date.getText().trim();
+        String descriptionText = short_description.getText().trim();
 
         // Validate inputs
-        if (linkText.isEmpty() || headlineText.isEmpty() || categoryText.isEmpty() || dateText.isEmpty()) {
+        if (linkText.isEmpty() || headlineText.isEmpty() || categoryText.isEmpty() || descriptionText.isEmpty()) {
             showAlert(Alert.AlertType.ERROR, "Form Error", "All fields are required. Please fill out all fields.");
+            return;
+        }
+        // Validate the link format
+        // Validate the link format
+        if (!isValidUrl(linkText)) {
+            showAlert(Alert.AlertType.ERROR, "Invalid Link", "The link provided is not valid. Please enter a valid URL.");
             return;
         }
 
         // Save article to the database
-        saveArticle(linkText, headlineText, categoryText, dateText);
+        saveArticle(linkText, headlineText, categoryText, descriptionText);
+
+        // Show success alert
+        showAlert(Alert.AlertType.INFORMATION, "Success", "Article added successfully!");
 
         // Clear the text fields after saving
         link.clear();
         headline.clear();
         category.clear();
-        date.clear();
+        short_description.clear();
     }
 
     void saveArticle(String link, String headline, String category, String date) {
@@ -55,10 +65,20 @@ public class AddArticle implements BaseController {
         Document article = new Document("link", link)
                 .append("headline", headline)
                 .append("category", category)
-                .append("date", date);
+                .append("short_description", date);
 
         // Insert the article into the collection
         articlesCollection.insertOne(article);
+    }
+
+    //Validates the URL format to ensure it's a well-formed absolute URL.
+    private boolean isValidUrl(String url) {
+        try {
+            new URL(url);
+            return true; // If successful, it's a valid URL
+        } catch (MalformedURLException e) {
+            return false; // Return false if URL is malformed
+        }
     }
 
     // Helper method to show alert messages
@@ -71,11 +91,11 @@ public class AddArticle implements BaseController {
     }
 
     @FXML
-    private void handleBackButton() {
+    private void handleBackButton() { // back button
         navigateToView((Stage) backButton.getScene().getWindow(), "/org/example/newsrecommender/SystemAdmin.fxml");
     }
 
-    @Override
+    @Override // overriding method
     public void navigateToView(Stage currentStage, String fxmlFile, String title, boolean noDecoration) {
         try {
             javafx.scene.Parent root = javafx.fxml.FXMLLoader.load(getClass().getResource(fxmlFile));

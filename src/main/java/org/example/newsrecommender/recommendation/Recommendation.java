@@ -1,8 +1,6 @@
 package org.example.newsrecommender.recommendation;
 
 import com.mongodb.client.MongoDatabase;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +16,6 @@ import org.example.newsrecommender.articles.Article;
 import org.example.newsrecommender.articles.ArticleLoader;
 import org.example.newsrecommender.db.DB;
 import org.example.newsrecommender.db.DBservice;
-import org.example.newsrecommender.recommendation.RecommendationManager;
 
 import java.io.IOException;
 
@@ -36,7 +33,7 @@ public class Recommendation {
 
     private RecommendationManager recommendationManager;
 
-    public Recommendation(){
+    public Recommendation(){ // empty constructor to initialize the fxml
     }
 
     public Recommendation(RecommendationManager recommendationManager) {
@@ -50,11 +47,11 @@ public class Recommendation {
         DBservice dbService = new DBservice(mongoDatabase);
 
         // Instantiate the ArticleFetcher with the DBservice
-        ArticleFetcher articleFetcher = new ArticleFetcher(dbService);  // Pass DBservice to ArticleFetcher
+        ArticleFetcher articleFetcher = new ArticleFetcher(dbService);
 
          // Instantiate UserPreferencesService with the required DBservice parameter
-        UserPreferencesService preferencesService = new UserPreferencesService(dbService);  // Pass dbService
-        recommendationManager = new RecommendationManager(preferencesService, articleFetcher);  // Now instantiate RecommendationManager
+        UserPreferencesService preferencesService = new UserPreferencesService(dbService);
+        recommendationManager = new RecommendationManager(preferencesService, articleFetcher);
 
         // Bind existing columns to Article properties
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("headline"));

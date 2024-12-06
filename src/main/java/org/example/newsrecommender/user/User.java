@@ -78,13 +78,6 @@ public class User {
         this.contact = contact;
     }
 
-    // Getter for userLikes
-    public UserPoints getUserLikes() {
-        return userPoints;
-    }
-
-    // Initialize UserLikes manually
-
 
     // Save User to the MongoDB 'users' collection
     public void saveToDatabase() {

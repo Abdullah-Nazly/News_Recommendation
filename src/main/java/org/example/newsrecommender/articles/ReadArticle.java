@@ -41,18 +41,18 @@ public class ReadArticle {
     private Button dislikeButton;
     @FXML
     private Button saveButton;
-    private ContentLoader articleLoader;
+    private ContentLoader articleLoader;// Loader for fetching articles
     private ObservableList<String> categories;
-    private List<Article> articles;
+    private List<Article> articles;// List of articles in the selected category
     private MongoDatabase database;
     private UserPoints userPoints;
     private Article currentArticle; // Track the currently displayed article
 
 
     public ReadArticle() {
-        this.database = DB.getDatabase();
-        this.articleLoader = new ArticleLoader(database);
-        this.userPoints = new UserPoints(database);
+        this.database = DB.getDatabase(); // Initialize MongoDB connection
+        this.articleLoader = new ArticleLoader(database); // Initialize the article loader
+        this.userPoints = new UserPoints(database); // Initialize user points management
     }
 
     @FXML
@@ -63,27 +63,27 @@ public class ReadArticle {
         saveButton.setDisable(true); // Initially disabled
     }
 
-    private void loadCategories() {
+    private void loadCategories() { // Fetch distinct categories from the articles collection
         MongoCollection<Document> collection = DB.getDatabase().getCollection("articles");
         List<String> categoryList = collection.distinct("category", String.class).into(new ArrayList<>());
         categories = FXCollections.observableArrayList(categoryList);
-        categoryComboBox.setItems(categories);
+        categoryComboBox.setItems(categories); // Populate category dropdown
     }
 
     @FXML
-    public void handleCategorySelection(ActionEvent event) {
+    public void handleCategorySelection(ActionEvent event) { // Load headlines when a category is selected
         String selectedCategory = categoryComboBox.getSelectionModel().getSelectedItem();
         if (selectedCategory != null) {
-            loadHeadlinesByCategory(selectedCategory);
-            User currentUser = Session.getCurrentUser();
+            loadHeadlinesByCategory(selectedCategory); // Load headlines for the selected category
+            User currentUser = Session.getCurrentUser(); // Get currently logged-in user
             if (currentUser != null) {
-                userPoints.addClickPoints(currentUser.getUserId(), selectedCategory);
+                userPoints.addClickPoints(currentUser.getUserId(), selectedCategory); // Add points for category click
             }
         }
     }
 
-    private void loadHeadlinesByCategory(String selectedCategory) {
-        articles = articleLoader.loadArticles(selectedCategory);  // articles is now a List<Article>
+    private void loadHeadlinesByCategory(String selectedCategory) {// Fetch articles and display their headlines
+        articles = articleLoader.loadArticles(selectedCategory);
         headlinesVBox.getChildren().clear();
 
         for (int i = 0; i < articles.size(); i++) {
@@ -95,15 +95,15 @@ public class ReadArticle {
             headlineLabel.setOnMouseEntered(event -> headlineLabel.setStyle("-fx-font-size: 10px;-fx-padding: 6px;-fx-cursor: hand;"));
             headlineLabel.setOnMouseExited(event -> headlineLabel.setStyle("-fx-font-size: 10px;-fx-padding: 6px;-fx-cursor: default;"));
 
-            headlineLabel.setOnMouseClicked(event -> loadArticleContent(article));
+            headlineLabel.setOnMouseClicked(event -> loadArticleContent(article)); // Load article content on click
             headlinesVBox.getChildren().add(headlineLabel);
         }
     }
 
-    private void loadArticleContent(Article article) {
-        String content = articleLoader.loadArticleContentFromUrl(article.getLink());
-        articleTextArea.setText(content);
-        currentArticle = article; // Track the current article being displayed
+    private void loadArticleContent(Article article) {// Load and display the selected article content
+        String content = articleLoader.loadArticleContentFromUrl(article.getLink()); // Fetch content from URL
+        articleTextArea.setText(content); // Display content in text area
+        currentArticle = article; // Set the current article
 
         // Enable the buttons after the article is displayed
         likeButton.setDisable(false);
